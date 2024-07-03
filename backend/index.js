@@ -6,8 +6,8 @@ import cors from 'cors'
 import AuthRoute from './Routes/AuthRoute.js'
 import UserRoute from './Routes/UserRoute.js'
 import PostRoute from './Routes/PostRoute.js'
-// import uploadRouter from './Routes/UploadRoute.js'
-// import ChatRoute from './Routes/ChatRoute.js'
+import uploadRouter from './Routes/UploadRoute.js'
+import ChatRoute from './Routes/ChatRoute.js'
 // import MessageRoute from './Routes/MessageRoute.js'
 // import sotryroute from './Routes/StoryUpload.js'
 // import storyRoute from './Routes/StoryRoute.js'
@@ -41,10 +41,10 @@ mongoose
 app.use('/auth', AuthRoute) 
 app.use('/user', UserRoute)
 app.use('/post', PostRoute)
-// app.use('/story', storyRoute)
-// app.use('/upload', uploadRouter)
-// app.use('/story', sotryroute)
-// app.use("/chat", ChatRoute)
+app.use('/upload', uploadRouter)
+app.use("/chat", ChatRoute)
 // app.use('/message', MessageRoute)
+// app.use('/story', storyRoute)
+// app.use('/story', sotryroute)
 
 // MONGO_DB = 'mongodb+srv://jishnu:iV1nYHf77FYnp8Ju@cluster0.zppmaeb.mongodb.net/MyDB?retryWrites=true&w=majority' 
