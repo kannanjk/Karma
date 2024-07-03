@@ -1,7 +1,7 @@
 
 function post() {
   return (
-    <div>post</div> 
+    <div className="col-span-6">post</div> 
   )
 }
 

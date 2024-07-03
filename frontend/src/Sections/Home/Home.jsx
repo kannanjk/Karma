@@ -4,8 +4,8 @@ import Post from "../../Components/Home/post"
 
 function Home() {
   return (
-    <div className=''>
-      <div>
+    <div className='container-fluid flex justify-center items-center bg-red-500'>
+      <div className='w-[98%] grid grid-cols-12 bg-green-400'>
         <Left />
         <Post />
         <Right />

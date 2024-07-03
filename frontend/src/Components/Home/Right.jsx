@@ -1,7 +1,9 @@
 
 function Right() {
   return (
-    <div>Right</div>
+    <div className="col-span-3">
+      Right
+    </div>
   )
 }
 

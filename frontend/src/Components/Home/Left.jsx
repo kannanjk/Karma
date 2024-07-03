@@ -1,7 +1,9 @@
 
 function Left() {
   return (
-    <div>Left</div>
+    <div className="col-span-3">
+      Left
+    </div>
   )
 }
 

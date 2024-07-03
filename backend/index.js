@@ -46,5 +46,3 @@ app.use("/chat", ChatRoute)
 app.use('/message', MessageRoute)
 // app.use('/story', storyRoute)
 // app.use('/story', sotryroute)
-
-// MONGO_DB = 'mongodb+srv://jishnu:iV1nYHf77FYnp8Ju@cluster0.zppmaeb.mongodb.net/MyDB?retryWrites=true&w=majority' 
