@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import dotenv from 'dotenv'
 import cors from 'cors'
 import AuthRoute from './Routes/AuthRoute.js'
-// import UserRoute from './Routes/UserRoute.js'
+import UserRoute from './Routes/UserRoute.js'
 // import PostRoute from './Routes/PostRoute.js'
 // import uploadRouter from './Routes/UploadRoute.js'
 // import ChatRoute from './Routes/ChatRoute.js'
@@ -39,7 +39,7 @@ mongoose
     })
 // useage of routes    
 app.use('/auth', AuthRoute) 
-// app.use('/user', UserRoute)
+app.use('/user', UserRoute)
 // app.use('/post', PostRoute)
 // app.use('/story', storyRoute)
 // app.use('/upload', uploadRouter)
