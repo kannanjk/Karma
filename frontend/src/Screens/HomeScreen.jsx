@@ -6,7 +6,7 @@ function HomeScreen() {
     <div>
       <Header/>
       <Home />
-    </div> 
+    </div>
   )
 }
 
