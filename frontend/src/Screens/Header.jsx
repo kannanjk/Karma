@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 function Header() {
   return (
@@ -11,7 +12,9 @@ function Header() {
             <input className='rounded-lg' type="text" />
           </div>
           <div className='flex gap-7  items-center justify-center'>
-            <p className=''>home</p>
+            <Link to='/register'>
+              <p className=''>home</p>
+            </Link>
             <p className=''>home</p>
             <p className=''>home</p>
             <p className=''>home</p>
