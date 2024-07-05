@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
 mongoose.set('strictQuery', true);
     app.use(cors())
 dotenv.config() 
- 
+   
  
 app.listen(process.env.PORT, () => {
     console.log(`Listening at ${process.env.PORT}`);
