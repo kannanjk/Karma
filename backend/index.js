@@ -37,10 +37,7 @@ mongoose
     }).catch((e) => {
         console.log(e);
     })
-// useage of routes   
-app.use('/',(req,res)=>{
-    res.json("Hello")
-}) 
+// useage of routes    
 app.use('/auth', AuthRoute) 
 app.use('/user', UserRoute)
 app.use('/post', PostRoute)
