@@ -1,6 +1,6 @@
-import { User } from "entities/Users";
 
 export interface IUserInteractor {
-    createUser(input: any): Promise<User>
-    findUser(input: any): Promise<User> 
-}
+    createUser(input: any): any
+    findUser(input: any): any
+    update(input: any): any
+}  

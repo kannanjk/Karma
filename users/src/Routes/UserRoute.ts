@@ -1,11 +1,11 @@
 import express from 'express'
 import { UserController } from "../Controllers/userControllers";
-import { IUserRepositry } from '../repositoris/userRepository';
+import { UserRepositry } from '../repositoris/userRepository';
 import { UserIntractor } from '../interactors/userIntractor';
   
 const app = express.Router()  
 
-const repositry = new IUserRepositry()
+const repositry = new UserRepositry()
 const intracter = new UserIntractor(repositry)
 const controller = new UserController(intracter)
 
