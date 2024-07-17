@@ -5,4 +5,4 @@ export class User {
         public readonly role: string,
         public readonly password: string,
     ) { }
-}
+} 
