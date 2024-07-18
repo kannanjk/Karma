@@ -4,7 +4,7 @@ import { UserRepositry } from "repositoris/userRepository";
 import { IUserRepositry } from "interfaces/IUserRepositry";
 
 export class UserIntractor implements IUserInteractor {
-    private repositry: IUserRepositry
+    private repositry: IUserRepositry 
     constructor(repositry: IUserRepositry) {
         this.repositry = repositry
     }
@@ -14,7 +14,7 @@ export class UserIntractor implements IUserInteractor {
     findUser(input: any): Promise<User> {
         return this.repositry.findUser(input)
     }
-    update(input: any): Promise<User> {
-        throw new Error("Method not implemented.");
+    updateUser(input: any) {
+        return this.repositry.update(input)
     }
 }

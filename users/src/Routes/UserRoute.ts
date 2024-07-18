@@ -11,5 +11,6 @@ const controller = new UserController(intracter)
 
 app.post('/signUp', controller.OnCreateUser.bind(controller))
 app.post('/login', controller.OnLoginUser.bind(controller))
+app.put('/update', controller.OnUpdate.bind(controller))
  
 export default app  

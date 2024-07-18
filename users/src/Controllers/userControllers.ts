@@ -69,4 +69,17 @@ export class UserController {
             })
         }
     }
+    async OnUpdate(req: Request, res: Response, next: NextFunction) {
+        const body = req.body
+        try {
+            this.interector.updateUser(body)
+        } catch (error) {
+            res.send({
+                message: 'Server Eroor',
+                success: false,
+                error: error
+            })
+        }
+    }
+
 }   
