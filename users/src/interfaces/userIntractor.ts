@@ -4,4 +4,5 @@ export interface IUserInteractor {
     findUser(input: any): any
     updateUser(input: any): any
     getAllUser():any
+    userAccess(id:any,access:boolean):any
 }  

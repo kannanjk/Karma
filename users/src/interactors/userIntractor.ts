@@ -16,7 +16,10 @@ export class UserIntractor implements IUserInteractor {
     updateUser(input: any) {
         return this.repositry.update(input)
     }
-    getAllUser() { 
+    getAllUser() {
         return this.repositry.getAllUser()
+    }
+    userAccess(id: number, access: boolean) {
+        return this.repositry.userAccess(id, access)
     }
 }

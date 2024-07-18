@@ -1,25 +1,24 @@
 import { NextFunction, Request, Response } from "express";
 import { IUserInteractor } from "../../interfaces/userIntractor";
 
-export class GetAllUsers {
-    private interector: IUserInteractor
+export class UserAccess {
+    private interector: IUserInteractor    
     constructor(interector: IUserInteractor) {
         this.interector = interector
     }
-    async OnGetAllUsers(req: Request, res: Response, next: NextFunction) {
-        console.log(req.body);
-        
+    async OnUserAccess(req: Request, res: Response, next: NextFunction) {
+        const {id,access} = req.body
+        const user = await this.interector.userAccess(id,access)
         try {
-            const users = await this.interector.getAllUser()
-            if (users) {
+            if (user) {
                 res.send({
-                    message: "Users Found",
+                    message: "Users Updated",
                     success: true,
-                    data: users
+                    data: user
                 })
             } else {
                 res.send({
-                    message: "data fetch fail",
+                    message: "user update fail",
                     success: false,
                 })
             }
