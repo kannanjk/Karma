@@ -1,7 +1,9 @@
- import  {User} from '../entities/Users'
+import { promises } from 'dns'
+import { User } from '../entities/Users'
 
- export interface IUserRepositry{
-    findUser(input: User): Promise<User>
-    create(data:User):Promise<User>
-    update(data:User):Promise<User>
- }
+export interface IUserRepositry {
+   findUser(input: User): Promise<User>
+   create(data: User): Promise<User>
+   update(data: User): Promise<User>
+   getAllUser(): Promise<User[]>
+} 

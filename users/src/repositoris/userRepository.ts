@@ -46,10 +46,12 @@ export class UserRepositry implements IUserRepositry {
                 name: data.name,
                 password: data.password
             },
-        })
-        console.log(updated);
-        
-        return
+        })        
+        return updated
+    }
+    async getAllUser(): Promise<User[]> {
+        const users = await this._prisma.user.findMany()
+        return  users
     }
 
 }

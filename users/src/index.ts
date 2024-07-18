@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
-import express, { Request, Response } from "express";
+import express from "express";
 import userRoute from './Routes/UserRoute'
+import adminRoute from './Routes/AdminRoute'
 import cookieSession from 'cookie-session';
 
 dotenv.config();
@@ -10,6 +11,7 @@ app.use(express.json())
 const port = process.env.PORT;
 
 app.use('/auth', userRoute)
+app.use('/admin', adminRoute)
 app.use(
   cookieSession({
     signed: false,
@@ -19,5 +21,5 @@ app.use(
 
 
 app.listen(port, () => {
-  console.log(`User Server is running at ${port}`);
+  console.log(`User Server is running at ${port}`);  
 });
