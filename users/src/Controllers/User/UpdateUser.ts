@@ -1,9 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import { IUserInteractor } from "../../interfaces/userIntractor";
+import { inject, injectable } from "inversify";
+import { INTERFACE_TYPE } from "../../utils";
 
+@injectable()
 export class UpdateUser {
     private interector: IUserInteractor
-    constructor(interector: IUserInteractor) {
+    constructor(
+        @inject(INTERFACE_TYPE.UserIntractor) interector: IUserInteractor
+    ) {
         this.interector = interector
     }
     async OnUpdate(req: Request, res: Response, next: NextFunction) {

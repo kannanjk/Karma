@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+import 'reflect-metadata'
 import express from "express";
 import userRoute from './Routes/UserRoute'
 import adminRoute from './Routes/AdminRoute'

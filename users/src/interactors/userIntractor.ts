@@ -1,13 +1,18 @@
 import { User } from "entities/Users";
 import { IUserInteractor } from "../interfaces/userIntractor";
 import { IUserRepositry } from "interfaces/IUserRepositry";
+import { inject, injectable } from "inversify";
+import { INTERFACE_TYPE } from "../utils";
 
+@injectable()
 export class UserIntractor implements IUserInteractor {
     private repositry: IUserRepositry
-    constructor(repositry: IUserRepositry) {
+    constructor(
+       @inject(INTERFACE_TYPE.UserRepositry) repositry: IUserRepositry
+    ) { 
         this.repositry = repositry
     }
-    createUser(input: any) {
+    createUser(input: any) { 
         return this.repositry.create(input)
     }
     findUser(input: any): Promise<User> {
