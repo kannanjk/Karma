@@ -10,4 +10,10 @@ export class ProductRepositry implements IProductRepositry {
         const data = await pro.save()
         return data
     }
+    async GetAllProducts(): Promise<Product[]> {
+        const data = await ProductModel.find()
+        if (data) {
+            return data
+        }
+    }
 } 

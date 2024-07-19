@@ -4,14 +4,17 @@ import { inject, injectable } from "inversify";
 import { PRODUCT_INTERFACE } from "../utils";
 
 @injectable()
-export class ProductIntractor implements IProductItractor{
-    private repositry :IProductRepositry
+export class ProductIntractor implements IProductItractor {
+    private repositry: IProductRepositry
     constructor(
-        @inject(PRODUCT_INTERFACE.ProductRepositry)repositry:IProductRepositry
-    ){
-       this.repositry= repositry
+        @inject(PRODUCT_INTERFACE.ProductRepositry) repositry: IProductRepositry
+    ) {
+        this.repositry = repositry
     }
     createProduct(input: any) {
         return this.repositry.CreateProduct(input)
-    } 
+    }
+  GetAllProduct() {
+      return this.repositry.GetAllProducts()
+  }
 }

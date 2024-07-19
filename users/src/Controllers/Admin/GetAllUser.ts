@@ -22,7 +22,7 @@ export class GetAllUsers {
                 })
             } else {
                 res.send({
-                    message: "data fetch fail",
+                    message: "User NOt found",
                     success: false,
                 })
             }
