@@ -3,9 +3,9 @@ import { IUserInteractor } from "../../interfaces/userIntractor";
 import { generateToken } from "../../app/jwt";
 import { inject, injectable } from "inversify";
 import { INTERFACE_TYPE } from "../../utils";
-
+ 
 @injectable()
-export class CreaterUser{
+export class CreaterUser{ 
     private interector: IUserInteractor
     constructor(
         @inject(INTERFACE_TYPE.UserIntractor)interector: IUserInteractor

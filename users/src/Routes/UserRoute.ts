@@ -36,8 +36,6 @@ const login = container.get<LoginUser>(INTERFACE_TYPE.LoginUser)
 
 const app = express.Router()
 
-
-
 app.post('/signUp', controller.OnCreateUser.bind(controller))
 app.post('/login', login.OnLoginUser.bind(login))
 // app.put('/update', updateUser.OnUpdate.bind(updateUser))

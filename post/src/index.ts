@@ -1,15 +1,17 @@
-const dotenv = require('dotenv');
-import { ConnectDb } from "./app/Db";
-import express, { Request, Response } from "express";
+import 'reflect-metadata'
+import { ConnectDb } from "./app/Database/Db";
+import express from "express";
+import productRoute from './Routes/Product'
+import dotenv from 'dotenv'
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Post Server');
-});
+app.use(express.json()) 
+
+app.use('/api',productRoute)
 
 ConnectDb()
 

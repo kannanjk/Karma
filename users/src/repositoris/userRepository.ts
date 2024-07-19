@@ -1,9 +1,6 @@
-import { IUserInteractor } from "interfaces/userIntractor";
 import { User } from "../entities/Users";
-// import { IUserRepositry } from "../interfaces/userRepositry";
 import { PrismaClient } from '@prisma/client'
 import { IUserRepositry } from "interfaces/IUserRepositry";
-import { response } from "express";
 import { injectable } from "inversify";
 
 @injectable()
@@ -67,9 +64,7 @@ export class UserRepositry implements IUserRepositry {
             data: {
                 access: access
             }
-        })
-        // console.log(user);
-        
+        })        
         return user
     }
 

@@ -1,4 +1,3 @@
-import { promises } from 'dns'
 import { User } from '../entities/Users'
 
 export interface IUserRepositry {
