@@ -9,11 +9,12 @@ export class CreaterUser{
     private interector: IUserInteractor
     constructor(
         @inject(INTERFACE_TYPE.UserIntractor)interector: IUserInteractor
-    ) {
+    ) { 
         this.interector = interector 
     }
     async OnCreateUser(req: Request, res: Response, next: NextFunction) {
         const body = req.body
+        console.log(body);
         try {
             const data = await this.interector.createUser(body)
             if (data.email) {
@@ -30,7 +31,7 @@ export class CreaterUser{
                 })
             } else {
                 return res.send({
-                    message: "signup fail",
+                    message: "user Already exist",
                     success: false,
                     data: data
                 })

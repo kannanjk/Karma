@@ -9,20 +9,21 @@ export class UserRepositry implements IUserRepositry {
     constructor() {
         this._prisma = new PrismaClient()
     }
-    async create({ name, email, password }: User): Promise<any> {
+    async create({ name, email, password,image }: User): Promise<any> {
         const check = await this._prisma.user.findUnique({
             where: {
                 email: email,
             },
         })
         if (check) {
-            return "user Already exist"
+            return  "user Already exist"
         } else {
             const user = await this._prisma.user.create({
                 data: {
                     name: name,
                     email: email,
                     password: password,
+                    image:image
                 },
             })
             return user
@@ -41,6 +42,8 @@ export class UserRepositry implements IUserRepositry {
         }
     }
     async update(data: User): Promise<User> {
+        console.log(data);
+        
         const updated = await this._prisma.user.update({
             where: {
                 email: data.email,
@@ -49,14 +52,14 @@ export class UserRepositry implements IUserRepositry {
                 name: data.name,
                 password: data.password
             },
-        })
+        })        
         return updated
     }
     async getAllUser(): Promise<User[]> {
         const users = await this._prisma.user.findMany()
-        return users
+        return 
     }
-    async userAccess(input:number,access:boolean): Promise<any> {
+    async userAccess(input: number, access: boolean): Promise<any> {
         const user = await this._prisma.user.update({
             where: {
                 id: input
@@ -64,7 +67,7 @@ export class UserRepositry implements IUserRepositry {
             data: {
                 access: access
             }
-        })        
+        })
         return user
     }
 

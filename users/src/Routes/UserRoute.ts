@@ -12,7 +12,7 @@ import { UpdateUser } from '../Controllers/User/UpdateUser'
 
 const container = new Container()
 
-container 
+container
     .bind<IUserRepositry>(INTERFACE_TYPE.UserRepositry)
     .to(UserRepositry)
 
@@ -26,18 +26,18 @@ container
 container
     .bind(INTERFACE_TYPE.LoginUser)
     .to(LoginUser)
-    container
+container
     .bind(INTERFACE_TYPE.UpdateUser)
     .to(UpdateUser)
 
 const controller = container.get<CreaterUser>(INTERFACE_TYPE.CreaterUser)
 const login = container.get<LoginUser>(INTERFACE_TYPE.LoginUser)
-
+const updateUser = container.get<UpdateUser>(INTERFACE_TYPE.UpdateUser)
 
 const app = express.Router()
 
 app.post('/signUp', controller.OnCreateUser.bind(controller))
 app.post('/login', login.OnLoginUser.bind(login))
-// app.put('/update', updateUser.OnUpdate.bind(updateUser))
+app.put('/update', updateUser.OnUpdate.bind(updateUser))
 
 export default app  

@@ -17,4 +17,7 @@ export class ProductIntractor implements IProductItractor {
   GetAllProduct() {
       return this.repositry.GetAllProducts()
   }
+  GetOneProduct(input: any) {
+    return this.repositry.getOneProduct(input)
+}
 }

@@ -19,4 +19,5 @@ model User {
   name     String?
   access   Boolean @default(true)
   password String
+  image    String?
 }

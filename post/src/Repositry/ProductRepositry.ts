@@ -16,4 +16,8 @@ export class ProductRepositry implements IProductRepositry {
             return data
         }
     }
+    async getOneProduct(input: Product): Promise<Product> {
+        const data = await ProductModel.findById(input)
+        return data
+    }
 } 
