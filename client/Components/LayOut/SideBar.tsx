@@ -4,9 +4,13 @@ import SideBarLogo from "./SideBarLogo"
 import SideBarItem from "./SideBarItem"
 import { BiLogOut } from "react-icons/bi"
 import SideBarTweetButton from "./SideBarTweetButton"
+import { useAppSelector } from "@/Redux/Store"
 
 function SideBar() {
-    // const {data:currentUser}= useCurr
+    const { user } = useAppSelector((state) =>
+        state.user
+    )
+
     const SideBar = [
         {
             lable: "Home",
@@ -44,8 +48,12 @@ function SideBar() {
                             />
                         ))
                     }
-                    <SideBarItem onClick={() => { }} href="" icon={BiLogOut} label="LogOut" />
-                    <SideBarTweetButton />
+                    {
+                        user===null ?null: (
+                            <SideBarItem onClick={() => { }} href="" icon={BiLogOut} label="LogOut" />
+                        )
+                    }
+                    <SideBarTweetButton  />
                 </div>
             </div>
         </div>

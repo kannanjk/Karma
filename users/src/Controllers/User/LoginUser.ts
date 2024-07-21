@@ -30,7 +30,7 @@ export class LoginUser{
                 })
             } else {
                 return res.send({
-                    message: "login fail",
+                    message: "User not found",
                     success: false,
                     data: data
                 })

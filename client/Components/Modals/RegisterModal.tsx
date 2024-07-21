@@ -1,14 +1,18 @@
 import React, { useCallback, useState } from 'react'
-import useLoginModal from '@/hooks/LoginModal'
+import { setUser } from '@/Redux/Features/GetUser'
+import { useDispatch, useSelector, useStore } from 'react-redux'
 import { useRegisterModal } from '@/hooks/RegisterModal'
+import { useLoginModal } from '@/hooks/LoginModal'
+
 import Input from '../Input'
 import Modal from '../Modal'
 import axios from 'axios'
 import toast from 'react-hot-toast'
-import { signIn } from 'next-auth/react'
-const API = axios.create({ baseURL: "http://localhost:3005" })
+
 
 function RegisterModal() {
+    const API = axios.create({ baseURL: "http://localhost:3005" })
+    const dispatch = useDispatch()
     const loginModal = useLoginModal()
     const REgisterModal = useRegisterModal()
 
@@ -24,23 +28,22 @@ function RegisterModal() {
         REgisterModal.onClose()
         loginModal.onOpen();
     }, [isLoading, REgisterModal, loginModal])
-
+ 
     const onSubmit = useCallback(async () => {
         try {
+            setLoading(true)
             if (name && email && password) {
-                setLoading(true)
                 const res = await API.post('/user/auth/signUp', { name, email, password })
                 if (res.data.success) {
                     REgisterModal.onClose()
                     toast.success(res.data.message)
-                    signIn('credentials', {
-                        email,
-                        password
-                    })
+                    dispatch(setUser(res.data.data))
+                    localStorage.setItem('token',res.data.token)
+                    location.reload()
                 } else {
                     toast.error(res.data.message)
                 }
-            }else{
+            } else {
                 toast.error("Fill all columns")
             }
         } catch (error) {
@@ -49,7 +52,7 @@ function RegisterModal() {
         } finally {
             setLoading(false)
         }
-    }, [REgisterModal, email, name, password])
+    }, [API, REgisterModal, dispatch, email, name, password])
 
     const bodyContent = (
         <div className='flex flex-col gap-4 text-white'>

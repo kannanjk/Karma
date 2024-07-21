@@ -1,20 +1,21 @@
 import Laout from "@/Components/Laout";
 import LoginModal from "@/Components/Modals/LoginModal";
 import RegisterModal from "@/Components/Modals/RegisterModal";
+import { store } from "@/Redux/Store";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { SessionProvider } from 'next-auth/react'
 import { Toaster } from "react-hot-toast";
+import { Provider } from "react-redux";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <SessionProvider session={pageProps.session}>
-      <Toaster/>
+    <Provider store={store}>
+      <Toaster />
       <RegisterModal />
       <LoginModal />
       <Laout>
         <Component {...pageProps} />
       </Laout>
-    </SessionProvider>
+    </Provider>
   )
 }

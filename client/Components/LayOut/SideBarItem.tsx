@@ -1,5 +1,9 @@
+import { useAppSelector } from "@/Redux/Store"
+import axios from "axios"
 import React from "react"
 import { IconType } from "react-icons"
+import { useSelector } from "react-redux"
+const API = axios.create({baseURL:"http://127.0.0.1:5000"}) 
 
 interface SideBarItemProp {
     label: string
@@ -11,6 +15,18 @@ interface SideBarItemProp {
 const SideBarItem: React.FC<SideBarItemProp> = ({
     label, href, icon: Icon, onClick
 }) => {
+    const { user } = useAppSelector((state) =>
+        state.user
+      )
+      const getUser = async () => {
+        try {
+          const res = await API.post('/user/auth/', {
+            token: localStorage.getItem('token')
+          })
+        } catch (error) {
+          console.log();
+        }
+      }
     return (
         <div className="flex flex-row items-center">
             <div className="relative rounded-full h-14 w-14 flex 
