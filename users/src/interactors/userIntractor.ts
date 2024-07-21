@@ -27,4 +27,7 @@ export class UserIntractor implements IUserInteractor {
     userAccess(id: number, access: boolean) {
         return this.repositry.userAccess(id, access)
     }
+    getUserprofile(input: any) {
+        return this.repositry.getUserPro(input)
+    }
 }

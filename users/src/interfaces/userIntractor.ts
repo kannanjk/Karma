@@ -5,4 +5,5 @@ export interface IUserInteractor {
     updateUser(input: any): any
     getAllUser():any
     userAccess(id:any,access:boolean):any
+    getUserprofile(data: any): any
 }  

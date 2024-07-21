@@ -70,5 +70,17 @@ export class UserRepositry implements IUserRepositry {
         })
         return user
     }
+    async getUserPro(data: any): Promise<User> {  
+        console.log(data.id.email);
+              
+       const user = await this._prisma.user.findUnique({
+        where: {
+            email: data.id.email,
+        },
+    })
+    // console.log(user);
+    
+    return user
+    }
 
 }

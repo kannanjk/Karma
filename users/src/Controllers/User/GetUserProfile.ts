@@ -1,29 +1,31 @@
-import { NextFunction, Request, Response } from "express";
-import { IUserInteractor } from "../../interfaces/userIntractor";
-import { inject, injectable } from "inversify";
-import { INTERFACE_TYPE } from "../../utils";
+import { inject, injectable } from "inversify"
+import { IUserInteractor } from "../../interfaces/userIntractor"
+import { INTERFACE_TYPE } from "../../utils"
+import { NextFunction, Request, Response } from "express"
+import { verifyUserToken } from "../../app/jwt"
 
-@injectable() 
-export class UpdateUser {
+@injectable()
+export class GetUserProfile {
     private interector: IUserInteractor
     constructor(
         @inject(INTERFACE_TYPE.UserIntractor) interector: IUserInteractor
     ) {
         this.interector = interector
     }
-    async OnUpdate(req: Request, res: Response, next: NextFunction) {
-        const body = req.body        
+    async OnGetProfile(req: Request, res: Response, next: NextFunction) {
+        const body = req.body
+        const user = verifyUserToken(body.token)        
         try {
-            const data = await this.interector.updateUser(body)
+            const data = await this.interector.getUserprofile(user)
             if (data) {
                 res.send({
-                    message: "User updated Success",
+                    message: "User found",
                     success: true,
                     data: data
                 })
             } else {
                 res.send({
-                    message: "User updated fail",
+                    message: "User found fail",
                     success: false,
                 })
             }

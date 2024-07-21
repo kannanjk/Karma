@@ -8,3 +8,7 @@ export const generateToken = (id: any) => {
         expiresIn: '10d'
     });
 }
+
+export const verifyUserToken =(token:any)=>{
+   return  jwt.verify(token, process.env.JWT_KEY)    
+}
