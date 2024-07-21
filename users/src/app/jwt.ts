@@ -10,5 +10,9 @@ export const generateToken = (id: any) => {
 }
 
 export const verifyUserToken =(token:any)=>{
-   return  jwt.verify(token, process.env.JWT_KEY)    
+  if (token) {
+    return  jwt.verify(token, process.env.JWT_KEY)    
+  }else{
+    return null
+  }
 }

@@ -1,24 +1,27 @@
-import axios from 'axios';
-import React from 'react'
-import { useSelector } from 'react-redux';
-const API = axios.create({baseURL:"http://127.0.0.1:5000"}) 
+import { setUser } from '@/Redux/Features/GetUser'
+import axios from 'axios'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { create } from 'zustand'
+const API = axios.create({ baseURL: "http://127.0.0.1:3005" })
 
-function Protection() {
-  const { user } = useSelector((state: any) =>
-    state.user
-  )
-  const getUser = async () => {
-    try {
-      const res = await API.post('/user/auth/', {
-        token: localStorage.getItem('token')
-      })
-    } catch (error) {
-      console.log();
+const Protection = () => {
+    const dispatch = useDispatch()
+    const getUserProtect = async () => {
+        try {
+            const res = await API.post('/user/auth/getOneUser', {
+                token: localStorage.getItem('token')
+            })
+            if (res.data.success) {
+                dispatch(setUser(res.data.data))
+            }
+        } catch (error) {
+            console.log();
+        }
     }
-  }
-  return (
-    <></>
-  )
+    useEffect(() => {
+        getUserProtect()
+    })
 }
 
 export default Protection

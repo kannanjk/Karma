@@ -32,7 +32,7 @@ export function LoginModal() {
             if ( email && password) {
                 const res = await API.post('/user/auth/login', {  email, password })
                 if (res.data.success) {
-                    REgisterModal.onClose()
+                    loginModal.onClose()
                     toast.success(res.data.message)
                     dispatch(setUser(res.data.data))
                     localStorage.setItem('token',res.data.token)
@@ -47,7 +47,7 @@ export function LoginModal() {
         } finally {
             setLoading(false)
         }
-    }, [API, REgisterModal, dispatch, email, password])
+    }, [API, dispatch, email, loginModal, password])
 
     const bodyContent = (
         <div className='flex flex-col gap-4 text-white'>
@@ -59,6 +59,7 @@ export function LoginModal() {
             />
             <Input
                 placeHolder='Password'
+                type='password'
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 disabled={isLoading}

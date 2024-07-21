@@ -7,8 +7,8 @@ interface RegisterModalProp {
 }
 
 export const useRegisterModal = create<RegisterModalProp>((set) => ({
-        isOpen: false,
-        onOpen: () => set({ isOpen: true }),
-        onClose: () => set({ isOpen: false }),
-    }))
+    isOpen: false,
+    onOpen: () => set({ isOpen: true }),
+    onClose: () => set({ isOpen: false }),
+}))
 
