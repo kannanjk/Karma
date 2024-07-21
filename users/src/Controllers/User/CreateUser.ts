@@ -3,7 +3,8 @@ import { IUserInteractor } from "../../interfaces/userIntractor";
 import { generateToken } from "../../app/jwt";
 import { inject, injectable } from "inversify";
 import { INTERFACE_TYPE } from "../../utils";
- 
+import { Password } from "../../app/HashPassword";
+  
 @injectable()
 export class CreaterUser{ 
     private interector: IUserInteractor
@@ -14,8 +15,10 @@ export class CreaterUser{
     }
     async OnCreateUser(req: Request, res: Response, next: NextFunction) {
         const body = req.body
-        console.log(body);
         try {
+           const hashedPassword =await Password.toHash(body.password)
+           body.password = hashedPassword
+           console.log(body);
             const data = await this.interector.createUser(body)
             if (data.email) {
                 const token = generateToken(data)
