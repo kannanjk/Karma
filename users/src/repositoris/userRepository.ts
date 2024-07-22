@@ -65,7 +65,7 @@ export class UserRepositry implements IUserRepositry {
     }
     async getAllUser(): Promise<User[]> {
         const users = await this._prisma.user.findMany()
-        return
+        return users
     }
     async userAccess(input: number, access: boolean): Promise<any> {
         const user = await this._prisma.user.update({
@@ -79,8 +79,6 @@ export class UserRepositry implements IUserRepositry {
         return user
     }
     async getUserPro(data: any): Promise<User> {
-        console.log(data.id.email);
-
         const user = await this._prisma.user.findUnique({
             where: {
                 email: data.id.email,

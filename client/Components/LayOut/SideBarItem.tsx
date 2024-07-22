@@ -4,7 +4,6 @@ import { useRouter } from "next/router"
 import React, { useCallback } from "react"
 import { IconType } from "react-icons"
 import useLoginModal from "@/hooks/LoginModal"
-const API = axios.create({ baseURL: "http://127.0.0.1:3005" })
 
 interface SideBarItemProp {
   label: string

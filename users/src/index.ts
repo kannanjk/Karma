@@ -6,7 +6,7 @@ import adminRoute from './Routes/AdminRoute'
 import cookieSession from 'cookie-session';
 import bodyParser from 'body-parser';
 import cors from 'cors'
-    
+     
 dotenv.config();
 
 const app = express();
