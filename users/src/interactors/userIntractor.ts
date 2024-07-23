@@ -30,4 +30,7 @@ export class UserIntractor implements IUserInteractor {
     getUserprofile(input: any) {
         return this.repositry.getUserPro(input)
     }
+    getUserData(data: any) {        
+        return this.repositry.getUserData(data)
+    }
 }

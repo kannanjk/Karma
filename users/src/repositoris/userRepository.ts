@@ -10,6 +10,14 @@ export class UserRepositry implements IUserRepositry {
     constructor() {
         this._prisma = new PrismaClient()
     }
+    async getUserData(data: number): Promise<User> {
+        const user = await this._prisma.user.findUnique({
+            where: {
+                id: data,
+            },
+        })
+        return user
+    }
     async create({ name, email, password, image }: User): Promise<any> {
         const check = await this._prisma.user.findUnique({
             where: {
@@ -39,10 +47,10 @@ export class UserRepositry implements IUserRepositry {
         if (check) {
             const comparePass = await Password.compare(
                 check.password, data.password
-            )            
+            )
             if (comparePass) {
                 return check
-            }else{
+            } else {
                 return 'Passwor incorrect'
             }
         } else {

@@ -2,21 +2,20 @@ import { inject, injectable } from "inversify"
 import { IUserInteractor } from "../../interfaces/userIntractor"
 import { INTERFACE_TYPE } from "../../utils"
 import { NextFunction, Request, Response } from "express"
-import { verifyUserToken } from "../../app/jwt"
 
 @injectable()
-export class GetUserProfile {
+export class GetUserData {
     private interector: IUserInteractor
     constructor(
         @inject(INTERFACE_TYPE.UserIntractor) interector: IUserInteractor
     ) {
         this.interector = interector
     }
-    async OnGetProfile(req: Request, res: Response, next: NextFunction) {
-        const body = req.body        
-        const user = verifyUserToken(body.token)        
+    async OnGetUserData(req: Request, res: Response, next: NextFunction) {
+        const { id } = req.body        
         try {
-            const data = await this.interector.getUserprofile(user)
+            const data = await this.interector.getUserData(id)
+            
             if (data) {
                 res.send({
                     message: "User found",

@@ -1,25 +1,17 @@
-import { setUser } from '@/Redux/Features/GetUser'
 import { useAppSelector } from '@/Redux/Store'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Avathar from '../Avathar'
+import { getUsers } from '@/Api/Protection'
 
 const FolwBar = () => {
-    const API = axios.create({ baseURL: "http://127.0.0.1:3005" })
     const [users, setusers] = useState([])
-    console.log(users);
-
-    const getUsers = async () => {
-        try {
-            const res = await API.get('/user/admin/getAllUser')
-            setusers(res.data.data)
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    
     useEffect(() => {
-        getUsers()
+        getUsers().then((data:any)=>{
+            setusers(data)
+        })
     })
     return (
         <div className=' lg:col-span-3 md:col-span-2 px-6 py-4 hidden lg:block'>

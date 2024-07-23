@@ -10,28 +10,19 @@ import axios from "axios"
 import { useEffect } from "react"
 import { setUser } from "@/Redux/Features/GetUser"
 import toast from "react-hot-toast"
+import { getCurrentUser } from "@/Api/Protection"
 
 function SideBar() {
-    const API = axios.create({ baseURL: "http://127.0.0.1:3005" })
     const dispatch = useDispatch()
 
     const { user } = useAppSelector((state) =>
         state.user
     )
-    const getUser = async () => {
-        try {
-            const res = await API.post('/user/auth/getOneUser', {
-                token: localStorage.getItem('token')
-            })
-            if (res.data.success) {
-                dispatch(setUser(res.data.data))
-            }
-        } catch (error) {
-            console.log();
-        }
-    }
+
     useEffect(() => {
-        getUser()
+        getCurrentUser().then((data: any) => {
+            dispatch(setUser(data.data))
+        })
     })
 
     const SideBar = [
@@ -50,7 +41,7 @@ function SideBar() {
             lable: "Profile",
             href: '/user/123',
             icon: FaUser,
-            auth: true 
+            auth: true
         }
     ]
     const LogOut = () => {
@@ -75,7 +66,7 @@ function SideBar() {
                         ))
                     }
                     {
-                        user === null ? null : (
+                        user&& (
                             <SideBarItem onClick={() => LogOut()} href="" icon={BiLogOut} label="LogOut" />
                         )
                     }

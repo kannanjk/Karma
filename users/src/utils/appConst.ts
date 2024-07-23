@@ -5,6 +5,7 @@ export const INTERFACE_TYPE = {
     LoginUser: Symbol.for('LoginUser'),
     UpdateUser: Symbol.for('UpdateUser'),
     GetUserProfile: Symbol.for('GetUserProfile'),
+    GetUserData:Symbol.for('GetUserData')
 }
 
 export const ADMIN_TYPE = {

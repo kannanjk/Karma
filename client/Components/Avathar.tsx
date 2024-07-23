@@ -1,3 +1,4 @@
+import { useAppSelector } from "@/Redux/Store"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { useCallback } from "react"
@@ -6,17 +7,21 @@ interface AvatharProp {
     userId: string
     isLarge?: boolean
     hasBorder?: boolean
+    currentUser?:string
 }
 
 const Avathar: React.FC<AvatharProp> = ({
-    userId, hasBorder, isLarge
+    userId, hasBorder, isLarge,currentUser
 }) => {
+    const { user } = useAppSelector((state) =>
+        state.user
+    )
     const router = useRouter()
     const onClick = useCallback((event: any) => {
         event.stopPropagation();
         const url = `/users/${userId}`
-        router.push(url)
-    }, [router, userId])
+         router.push(url)
+    }, [ router, userId])
 
     return (
         <div className={`

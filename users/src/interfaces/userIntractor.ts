@@ -6,4 +6,5 @@ export interface IUserInteractor {
     getAllUser():any
     userAccess(id:any,access:boolean):any
     getUserprofile(data: any): any
+    getUserData(data:any):any
 }  
