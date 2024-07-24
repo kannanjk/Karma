@@ -19,9 +19,9 @@ const UserHero: React.FC<UserProp> = ({ userId }) => {
     <div>
       <div className='bg-neutral-700 text-white h-44 relative'>
         {
-          user.image && (
+          user?.image && (
             <Image
-              src={user.image}
+              src={user?.image}
               fill
               alt='Cover image'
               style={{ objectFit: "cover" }}

@@ -16,7 +16,7 @@ export class GetUserData {
         try {
             const data = await this.interector.getUserData(id)
             
-            if (data) {
+            if (data.email) {
                 res.send({
                     message: "User found",
                     success: true,
@@ -30,7 +30,7 @@ export class GetUserData {
             }
         } catch (error) {
             res.send({
-                message: 'Server Eroor',
+                message: 'Server myru',
                 success: false,
                 error: error
             })

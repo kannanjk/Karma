@@ -18,8 +18,8 @@ export const getUser = async (userId: number) => {
         const res = await API.post('/user/auth/getUserData', {
             id: Number(userId)
         })
-        if (res.data.success) {
-            return res.data.data
+        if (res.data) {
+            return res
         } else {
             return 'User not found'
         }
@@ -34,7 +34,11 @@ export const getCurrentUser = async () => {
         const res = await API.post('/user/auth/getOneUser', {
             token: localStorage.getItem('token')
         })        
-        return res.data
+        if (res.data.success) {
+            return res.data
+        }else{
+            return 'user not found'
+        }
     } catch (error) {
         console.log();
     }

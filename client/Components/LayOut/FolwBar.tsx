@@ -1,15 +1,12 @@
-import { useAppSelector } from '@/Redux/Store'
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import Avathar from '../Avathar'
 import { getUsers } from '@/Api/Protection'
 
 const FolwBar = () => {
-    const [users, setusers] = useState([])
-    
+    const [users, setusers] = useState<any>([])
+
     useEffect(() => {
-        getUsers().then((data:any)=>{
+        getUsers().then((data: any) => {
             setusers(data)
         })
     })
@@ -19,7 +16,7 @@ const FolwBar = () => {
                 <h2 className='text-white text-xl font-semibold '>Who to follow</h2>
                 <div className='flex flex-col gap-6 mt-4'>
                     {
-                        users.map((user: Record<string, any>) => (
+                        users?.map((user: Record<string, any>) => (
                             <div key={user.id} className='flex flex-row gap-4'>
                                 <Avathar userId={user.id} />
                                 <div className='flex flex-col'>

@@ -12,19 +12,11 @@ import { setUser } from "@/Redux/Features/GetUser"
 import toast from "react-hot-toast"
 import { getCurrentUser } from "@/Api/Protection"
 
-function SideBar() {
-    const dispatch = useDispatch()
+interface User {
+    user: any
+}
 
-    const { user } = useAppSelector((state) =>
-        state.user
-    )
-
-    useEffect(() => {
-        getCurrentUser().then((data: any) => {
-            dispatch(setUser(data.data))
-        })
-    })
-
+const SideBar: React.FC<User> = ({ user }) => {    
     const SideBar = [
         {
             lable: "Home",
@@ -66,7 +58,7 @@ function SideBar() {
                         ))
                     }
                     {
-                        user&& (
+                        user && (
                             <SideBarItem onClick={() => LogOut()} href="" icon={BiLogOut} label="LogOut" />
                         )
                     }
