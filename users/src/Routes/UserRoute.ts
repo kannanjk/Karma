@@ -17,7 +17,6 @@ const container = new Container()
 container
     .bind<IUserRepositry>(INTERFACE_TYPE.UserRepositry)
     .to(UserRepositry)
-
 container
     .bind<IUserInteractor>(INTERFACE_TYPE.UserIntractor)
     .to(UserIntractor)

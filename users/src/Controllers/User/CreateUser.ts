@@ -17,8 +17,7 @@ export class CreaterUser{
         const body = req.body
         try {
            const hashedPassword =await Password.toHash(body.password)
-           body.password = hashedPassword
-           console.log(body);
+           body.password = hashedPassword           
             const data = await this.interector.createUser(body)
             if (data.email) {
                 const token = generateToken(data)
@@ -41,7 +40,7 @@ export class CreaterUser{
             }
         } catch (error) {
             res.send({
-                message: 'Server Eroor',
+                message: 'Server ......',
                 success: false,
                 error: error
             })

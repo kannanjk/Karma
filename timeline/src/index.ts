@@ -7,5 +7,5 @@ const app = express();
 const port = process.env.PORT;
 
 app.listen(port, () => {
-  console.log(`Cart Server is running at ${port}`);
+  console.log(`timeline Server is running at ${port}`);
 });

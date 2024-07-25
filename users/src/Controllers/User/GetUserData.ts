@@ -13,9 +13,8 @@ export class GetUserData {
     }
     async OnGetUserData(req: Request, res: Response, next: NextFunction) {
         const { id } = req.body
-                
         try {
-            const data = await this.interector.getUserData(id)            
+            const data = await this.interector.getUserData(id)    
             if (data.email) {
                 res.send({
                     message: "User found",

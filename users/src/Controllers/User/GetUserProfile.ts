@@ -13,7 +13,7 @@ export class GetUserProfile {
         this.interector = interector
     }
     async OnGetProfile(req: Request, res: Response, next: NextFunction) {
-        const body = req.body        
+        const body = req.body                
         const user = verifyUserToken(body.token)        
         try {
             const data = await this.interector.getUserprofile(user)
