@@ -15,10 +15,13 @@ export const getUsers = async () => {
 
 export const getUser = async (userId: number) => {
     try {
+        // console.log(userId);
+        
         const res = await API.post('/user/auth/getUserData', {
             id: Number(userId)
-        })
-        if (res.data) {
+        })        
+        if (res) {
+            
             return res
         } else {
             return 'User not found'

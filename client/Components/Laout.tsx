@@ -34,7 +34,7 @@ const Laout: React.FC<LayoutProps> = ({ children }) => {
                     <div className="col-span-10 md:col-span-10 lg:col-span-6 border-x-[1px] border-neutral-800">
                         {children}
                     </div>
-                    <FolwBar />
+                    <FolwBar  />
                 </div>
             </div>
         </div>

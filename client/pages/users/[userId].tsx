@@ -10,7 +10,6 @@ import { useDispatch } from "react-redux"
 
 const UserView = () => {
     const [user, setUser] = useState<any>({})
-    console.log(user);
     
     const router = useRouter()
     const dispatch = useDispatch()
@@ -31,7 +30,7 @@ const UserView = () => {
         <>
             <Header showBackArrow label={user?.name} />
             <UserHero userId={userId as string} />
-            <UserBio userId={userId as string} />
+            <UserBio userId={Number(userId)  } />
         </>
     )
 }

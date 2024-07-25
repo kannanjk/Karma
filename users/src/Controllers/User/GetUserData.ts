@@ -12,10 +12,10 @@ export class GetUserData {
         this.interector = interector
     }
     async OnGetUserData(req: Request, res: Response, next: NextFunction) {
-        const { id } = req.body        
+        const { id } = req.body
+                
         try {
-            const data = await this.interector.getUserData(id)
-            
+            const data = await this.interector.getUserData(id)            
             if (data.email) {
                 res.send({
                     message: "User found",
@@ -30,7 +30,7 @@ export class GetUserData {
             }
         } catch (error) {
             res.send({
-                message: 'Server myru',
+                message: 'Server Error',
                 success: false,
                 error: error
             })
