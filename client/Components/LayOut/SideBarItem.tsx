@@ -3,7 +3,7 @@ import axios from "axios"
 import { useRouter } from "next/router"
 import React, { useCallback } from "react"
 import { IconType } from "react-icons"
-import useLoginModal from "@/hooks/LoginModal"
+import useLoginModal from "@/hooks/UseLoginModal"
 
 interface SideBarItemProp {
   label: string

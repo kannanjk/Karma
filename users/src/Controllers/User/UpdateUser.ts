@@ -12,9 +12,11 @@ export class UpdateUser {
         this.interector = interector
     }
     async OnUpdate(req: Request, res: Response, next: NextFunction) {
-        const body = req.body        
+        const body = req.body                
+        console.log(body);
         try {
             const data = await this.interector.updateUser(body)
+            
             if (data) {
                 res.send({
                     message: "User updated Success",

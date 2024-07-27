@@ -1,11 +1,10 @@
-import { getCurrentUser, getUser } from '@/Api/Protection'
+import { getUser } from '@/Api/userApi'
 import React, { useEffect, useMemo, useState } from 'react'
-import Button from '../Button'
 import { useAppSelector } from '@/Redux/Store'
-import { useDispatch } from 'react-redux'
-import { setUser } from '@/Redux/Features/GetUser'
 import { BiCalendar } from 'react-icons/bi'
 import { format } from 'date-fns'
+import useEditModal from '@/hooks/UseEditModal copy'
+import EditModel from '../Modals/EditModel'
 
 interface UserProp {
     userId: any
@@ -13,11 +12,14 @@ interface UserProp {
 
 const UserBio: React.FC<UserProp> = ({ userId }) => {
 
+    const [editModal, setEdimodal] = useState<any>(false)
+
     const [user1, setUser1] = useState<any>({})
 
     const { user } = useAppSelector((state) =>
         state.user
     )
+
 
     const createsAt = useMemo(() => {
         if (!user?.created_at) {
@@ -36,20 +38,26 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
             }
         })
     })
+    function fun() {
+        setEdimodal(true)
+    }
     return (
         <div className='border-b-[1px] border-neutral-800 pb-4'>
             <div className='flex justify-end p-2'>
                 {
                     user1 && user ?
                         userId == user.id ? (
-                            <Button secondry label='Edit' onClick={() => { }} />
+                            <>
+                                <p className='text-white cursor-pointer' onClick={()=>fun()} >Edit profile</p>
+                                <EditModel
+                                    editModal={editModal}
+                                    setEdimodal={setEdimodal}
+                                    data={user}
+                                />
+                            </>
                         ) :
                             (
-                                <Button
-                                    onClick={() => { }}
-                                    label='Follw'
-                                    secondry
-                                />
+                                <p className='text-white'>Folw</p>
                             ) : ''
                 }
             </div>
@@ -61,28 +69,33 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
                     <p className='text-md text-neutral-500'>
                         @{user1?.email}
                     </p>
-                    <div className='flex flex-row items-center mt-4 gap-3 text-neutral-500'>
-                        <BiCalendar size={24} />
-                        <p className='text-white'>
-                            joined {createsAt}
-                        </p>
-                    </div>
+                </div>
+                <div className='flex flex-col mt-4'>
+                    <p className='text-white'>
+                        {user?.bio ? user?.bio : "enter your biogrophy"}
+                    </p>
+                </div>
+                <div className='flex flex-row items-center mt-4 gap-3 text-neutral-500'>
+                    <BiCalendar size={24} />
+                    <p className='text-white'>
+                        joined {createsAt}
+                    </p>
                 </div>
                 <div className='flex flex-row items-center mt-4 gap-6'>
                     <div className='flex flex-row items-center gap-1'>
                         <p className='text-white'>
-                            {user?.following || 0}
+                            {user?.following ? Object.keys(user?.following).length : ''}
                         </p>
                         <p className='text-neutral-500'>
-                        Following
+                            Following
                         </p>
                     </div>
                     <div className='flex flex-row items-center gap-1'>
                         <p className='text-white'>
-                            { user?.followers || 0}
+                            {user?.following ? Object.keys(user?.followers).length : ''}
                         </p>
                         <p className='text-neutral-500'>
-                        Followers
+                            Followers
                         </p>
                     </div>
                 </div>

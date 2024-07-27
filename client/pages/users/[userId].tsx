@@ -1,4 +1,4 @@
-import { getUser, getUsers } from "@/Api/Protection"
+import { getUser, getUsers } from "@/Api/userApi"
 import Header from "@/Components/LayOut/Header"
 import UserBio from "@/Components/users/UserBio"
 import UserHero from "@/Components/users/UserHero"

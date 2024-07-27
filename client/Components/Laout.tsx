@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import SideBar from "./LayOut/SideBar"
 import FolwBar from "./LayOut/FolwBar"
-import { getCurrentUser, getUsers } from "@/Api/Protection"
+import { getCurrentUser, getUsers } from "@/Api/userApi"
 import { useDispatch } from "react-redux"
 import { setUser } from "@/Redux/Features/GetUser"
 import { useAppSelector } from "@/Redux/Store"

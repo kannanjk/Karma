@@ -1,4 +1,5 @@
 import Laout from "@/Components/Laout";
+import EditModel from "@/Components/Modals/EditModel";
 import LoginModal from "@/Components/Modals/LoginModal";
 import RegisterModal from "@/Components/Modals/RegisterModal";
 import { store } from "@/Redux/Store";
@@ -13,6 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Toaster />
       <RegisterModal />
       <LoginModal />
+      <EditModel />
       <Laout>
         <Component {...pageProps} />
       </Laout>

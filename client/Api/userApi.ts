@@ -15,13 +15,10 @@ export const getUsers = async () => {
 
 export const getUser = async (userId: number) => {
     try {
-        // console.log(userId);
-        
         const res = await API.post('/user/auth/getUserData', {
             id: Number(userId)
-        })        
+        })
         if (res) {
-            
             return res
         } else {
             return 'User not found'
@@ -31,18 +28,28 @@ export const getUser = async (userId: number) => {
     }
 }
 
+export const updateUser = async (data: any) => {
+    try {
+        const res = await API.put('/user/auth/update', data)
+        return res.data
+    } catch (error) {
+        console.log(error);
+
+    }
+}
 
 export const getCurrentUser = async () => {
     try {
         const res = await API.post('/user/auth/getOneUser', {
             token: localStorage.getItem('token')
-        })        
+        })
         if (res.data.success) {
             return res.data
-        }else{
+        } else {
             return 'user not found'
         }
     } catch (error) {
         console.log();
     }
 }
+

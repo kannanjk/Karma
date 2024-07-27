@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Avathar from '../Avathar'
-import { getUsers } from '@/Api/Protection'
+import { getUsers } from '@/Api/userApi'
 
 const FolwBar = () => {
     const [users, setusers] = useState<any>([])

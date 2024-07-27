@@ -10,7 +10,7 @@ import axios from "axios"
 import { useEffect } from "react"
 import { setUser } from "@/Redux/Features/GetUser"
 import toast from "react-hot-toast"
-import { getCurrentUser } from "@/Api/Protection"
+import { getCurrentUser } from "@/Api/userApi"
 
 interface User {
     user: any

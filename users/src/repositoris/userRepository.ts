@@ -11,23 +11,22 @@ export class UserRepositry implements IUserRepositry {
         this._prisma = new PrismaClient()
     }
 
-    async create({ name, email, password, image }: User): Promise<User> {
+    async create({ name, email, password }: User): Promise<User> {
         const check = await this._prisma.user.findUnique({
             where: {
                 email: email,
             },
         })
         if (check) {
-            return 
+            return
         } else {
             const user = await this._prisma.user.create({
                 data: {
                     name: name,
                     email: email,
                     password: password,
-                    image: image,
                 },
-            })
+            })            
             return user
         }
     }
@@ -36,7 +35,7 @@ export class UserRepositry implements IUserRepositry {
             where: {
                 email: data.email
             },
-        })        
+        })
         if (check) {
             const comparePass = await Password.compare(
                 check.password, data.password
@@ -44,22 +43,22 @@ export class UserRepositry implements IUserRepositry {
             if (comparePass) {
                 return check
             } else {
-                return 
+                return
             }
         } else {
-            return 
+            return
         }
     }
     async update(data: User): Promise<User> {
-        console.log(data);
-
         const updated = await this._prisma.user.update({
             where: {
                 email: data.email,
             },
             data: {
                 name: data.name,
-                password: data.password
+                bio: data.bio,
+                profileImage: data.profileImage,
+                coverImage: data.coverImage
             },
         })
         return updated
@@ -84,14 +83,26 @@ export class UserRepositry implements IUserRepositry {
             where: {
                 email: data.id.email,
             },
+            include: {
+                followers: true,
+                following: true
+            },
         })
         return user
     }
-    async getUserData(data: number): Promise<User> {
-        const user = await this._prisma.user.findUnique({
+    async getUserData(data: number): Promise<User> {        
+        const user = await this._prisma.user.findFirst({
             where: {
                 id: data,
             },
+            include: {
+                followers: {
+                    select: { followerId: true }
+                },
+                following: {
+                    select: { followingId: true }
+                },
+            }
         })        
         return user
     }

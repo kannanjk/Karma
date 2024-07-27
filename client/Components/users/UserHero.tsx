@@ -1,4 +1,4 @@
-import { getUser } from '@/Api/Protection'
+import { getUser } from '@/Api/userApi'
 import React, { useEffect, useState } from 'react'
 import Avathar from '../Avathar'
 import Image from 'next/image'

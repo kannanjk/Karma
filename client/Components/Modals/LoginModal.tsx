@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
-import  useLoginModal  from '@/hooks/LoginModal'
-import {useRegisterModal} from '@/hooks/RegisterModal'
+import  useLoginModal  from '@/hooks/UseLoginModal'
+import {useRegisterModal} from '@/hooks/UseRegisterModal'
 import Input from '../Input'
 import Modal from '../Modal'
 import axios from 'axios'

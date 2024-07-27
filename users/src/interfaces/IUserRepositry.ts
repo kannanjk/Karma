@@ -5,7 +5,7 @@ export interface IUserRepositry {
    create(data: User): Promise<User>
    update(data: User): Promise<User>
    getAllUser(): Promise<User[]>
-   userAccess(id:number,access:boolean):Promise<any>
+   userAccess(id:number,access:boolean):Promise<User>
    getUserPro(data:User):Promise<User>
    getUserData(data:number):Promise<User>
 } 

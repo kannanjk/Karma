@@ -14,25 +14,25 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  email      String   @unique
-  name       String?
-  access     Boolean  @default(true)
-  password   String
-  image      String?
-  bio        String?
-  created_at DateTime @default(now())
-  followers  Follow[] @relation("UserFollowers")
-  following  Follow[] @relation("UserFollowing")
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  name         String?
+  access       Boolean  @default(true)
+  password     String
+  profileImage String?
+  coverImage   String?
+  bio          String?
+  created_at   DateTime @default(now())
+  followers    Follow[] @relation("UserFollowers")
+  following    Follow[] @relation("UserFollowing")
 }
 
 model Follow {
-  id          Int      @id @default(autoincrement())
-  follower    User     @relation("UserFollowers", fields: [followerId], references: [id])
+  id          Int  @id @default(autoincrement())
+  follower    User @relation("UserFollowers", fields: [followerId], references: [id])
   followerId  Int
-  following   User     @relation("UserFollowing", fields: [followingId], references: [id])
+  following   User @relation("UserFollowing", fields: [followingId], references: [id])
   followingId Int
-  createdAt   DateTime @default(now())
-   
+
   @@unique([followerId, followingId])
 }

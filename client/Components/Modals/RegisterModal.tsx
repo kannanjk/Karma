@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react'
 import { setUser } from '@/Redux/Features/GetUser'
 import { useDispatch, useSelector, useStore } from 'react-redux'
-import { useRegisterModal } from '@/hooks/RegisterModal'
-import { useLoginModal } from '@/hooks/LoginModal'
+import { useRegisterModal } from '@/hooks/UseRegisterModal'
+import { useLoginModal } from '@/hooks/UseLoginModal'
 
 import Input from '../Input'
 import Modal from '../Modal'
@@ -29,7 +29,7 @@ function RegisterModal() {
         loginModal.onOpen();
     }, [isLoading, REgisterModal, loginModal])
  
-    const onSubmit = useCallback(async () => {
+    const onSubmit = useCallback(async () => { 
         try {
             setLoading(true)
             if (name && email && password) {
