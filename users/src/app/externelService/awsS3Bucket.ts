@@ -17,8 +17,8 @@ const s3Client = new S3Client({
 export const uploadImageToBucket = async (
   fileBuffer_code: any, 
   fileType: any
-) => {
-  const fileName = generateFileName(); 
+) => {      
+  const fileName = generateFileName();         
   const uploadParams: {
     Bucket: string;
     Body: any;
