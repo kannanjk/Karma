@@ -1,35 +1,50 @@
-import { useAppSelector } from "@/Redux/Store"
-import { useCallback, useEffect, useState } from "react"
-import Modal from "../Modal"
-import useEditModal from "@/hooks/UseEditModal copy"
-import Input from "../Input"
-import { updateUser } from "@/Api/userApi"
+import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react"
+import { updateUser, uploadImage } from "@/Api/userApi"
 import { setUser } from "@/Redux/Features/GetUser"
 import toast from "react-hot-toast"
+import ImageUpload from "../ImageUpload";
+
+interface Data {
+    id: number;
+    name: string;
+    bio: string
+    email: string
+    profileImage: string
+}
 
 interface EditPrif {
-    editModal: any
-    setEdimodal: any
-    data: any
+    editModal: boolean
+    setEdimodal: React.Dispatch<React.SetStateAction<boolean>>
+    data: Data
 }
 
 const EditModel: React.FC<EditPrif> = ({ editModal, setEdimodal, data }) => {
 
     const [formData, setFormData] = useState({ ...data });
+    const [profileImage, setProfileImage] = useState<File | null>(null);
 
-    const handleChange = (e: any) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+    const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const target = event.target as HTMLInputElement;
+        if (target && target.files && target.files[0]) {
+            let img = target.files[0];
+            if (target.name === "profileImage") {
+                setProfileImage(img);
+            }
+        }
+    };
 
-    const onSubmit = async (e: any) => {
+    const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const user = {
             email: data?.email,
             name: formData.name,
-            bio: formData.bio
+            bio: formData.bio,
+            profileImage: profileImage?.name
         }
         const res = await updateUser(user)
-        console.log(res);
 
         if (res.success) {
             setUser(res)
@@ -37,6 +52,16 @@ const EditModel: React.FC<EditPrif> = ({ editModal, setEdimodal, data }) => {
             toast.success(res.message)
         } else {
             toast.error(res.message)
+        }
+
+        let UserData = formData;
+        if (profileImage) {
+            const data = new FormData();
+            const fileName = Date.now() + profileImage.name;
+            data.append("name", fileName);
+            data.append("file", profileImage);
+            UserData.profileImage = fileName;
+            await uploadImage(data)
         }
     }
 
@@ -60,6 +85,13 @@ const EditModel: React.FC<EditPrif> = ({ editModal, setEdimodal, data }) => {
                             <form className="space-y-4" >
                                 <div>
                                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                                    <input type="file"
+                                        onChange={onImageChange}
+                                        // value={formData?.profileImage}
+                                        name="profileImage" id="profileImage" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Enter name" />
+                                </div>
+                                <div>
+                                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
                                     <input type="text"
                                         onChange={handleChange}
                                         value={formData?.name}
@@ -73,7 +105,7 @@ const EditModel: React.FC<EditPrif> = ({ editModal, setEdimodal, data }) => {
                                         placeholder="Enter bio" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
                                 </div>
                                 <div className="flex p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                    <button onClick={onSubmit} type="button" className="ml-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
+                                    <button onClick={(e: any) => onSubmit(e)} type="button" className="ml-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
                                 </div>
                             </form>
                         </div>

@@ -13,7 +13,7 @@ export class UpdateUser {
     }
     async OnUpdate(req: Request, res: Response, next: NextFunction) {
         const body = req.body                
-        console.log(body);
+        // console.log(req.files);
         try {
             const data = await this.interector.updateUser(body)
             

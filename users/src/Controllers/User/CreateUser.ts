@@ -14,7 +14,7 @@ export class CreaterUser{
         this.interector = interector 
     }
     async OnCreateUser(req: Request, res: Response, next: NextFunction) {
-        const body = req.body
+        const body = req.body        
         try {
            const hashedPassword =await Password.toHash(body.password)
            body.password = hashedPassword           

@@ -3,6 +3,8 @@ import { PrismaClient } from '@prisma/client'
 import { Password } from "../app/HashPassword";
 import { IUserRepositry } from "../interfaces/IUserRepositry";
 import { injectable } from "inversify";
+import { uploadImageToBucket } from "../app/externelService/awsS3Bucket";
+import { fileBuffer } from "../app/externelService/resiseImageSharp";
 
 @injectable()
 export class UserRepositry implements IUserRepositry {
@@ -26,7 +28,7 @@ export class UserRepositry implements IUserRepositry {
                     email: email,
                     password: password,
                 },
-            })            
+            })
             return user
         }
     }
@@ -90,7 +92,7 @@ export class UserRepositry implements IUserRepositry {
         })
         return user
     }
-    async getUserData(data: number): Promise<User> {        
+    async getUserData(data: number): Promise<User> {
         const user = await this._prisma.user.findFirst({
             where: {
                 id: data,
@@ -103,7 +105,14 @@ export class UserRepositry implements IUserRepositry {
                     select: { followingId: true }
                 },
             }
-        })        
+        })
         return user
+    }
+    async uploadImage( data: any): Promise<any> {
+        const fileBuffer_code = await fileBuffer(data.file.data);
+        const res = await uploadImageToBucket(fileBuffer_code, data.file.mimetype)
+        console.log(res);
+        
+        return res
     }
 }

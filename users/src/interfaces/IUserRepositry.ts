@@ -8,4 +8,5 @@ export interface IUserRepositry {
    userAccess(id:number,access:boolean):Promise<User>
    getUserPro(data:User):Promise<User>
    getUserData(data:number):Promise<User>
+   uploadImage(data:any):Promise<any>
 } 

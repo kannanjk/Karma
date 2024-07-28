@@ -33,4 +33,7 @@ export class UserIntractor implements IUserInteractor {
     getUserData(data: any) {        
         return this.repositry.getUserData(data)
     }
+    uploadImage(data: any) { 
+        return this.repositry.uploadImage(data)
+    }
 }

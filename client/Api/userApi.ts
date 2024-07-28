@@ -53,3 +53,10 @@ export const getCurrentUser = async () => {
     }
 }
 
+export const uploadImage = async ( data: any) => {
+    try {
+        const res = await API.post('/user/auth//uploadImage', data)
+    } catch (error) {
+        console.log();
+    }
+}
