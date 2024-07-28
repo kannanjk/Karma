@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import { ConnectDb } from "./app/Database/Db";
 import express from "express";
-import productRoute from './Routes/Product'
+import productRoute from './Routes/Post'
 import dotenv from 'dotenv'
 
 dotenv.config();

@@ -1,6 +1,6 @@
 import { Product } from "app/entity";
-import { IProductRepositry } from "interface/IProductRepositry";
-import { ProductModel } from '../app/Database/Schema/ProductModel'
+import { IProductRepositry } from "interface/IPostRepositry";
+import { ProductModel } from '../app/Database/Schema/PostModel'
 import { injectable } from "inversify";
 
 @injectable()

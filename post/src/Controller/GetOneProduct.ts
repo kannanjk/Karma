@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { IProductItractor } from "interface/IProdectIntractor";
+import { IProductItractor } from "interface/IPostIntractor";
 import { inject, injectable } from "inversify";
 import { PRODUCT_INTERFACE } from "utils";
 

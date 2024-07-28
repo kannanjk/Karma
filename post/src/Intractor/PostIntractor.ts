@@ -1,5 +1,5 @@
-import { IProductRepositry } from "../interface/IProductRepositry";
-import { IProductItractor } from "../interface/IProdectIntractor";
+import { IProductRepositry } from "../interface/IPostRepositry";
+import { IProductItractor } from "../interface/IPostIntractor";
 import { inject, injectable } from "inversify";
 import { PRODUCT_INTERFACE } from "../utils";
 
