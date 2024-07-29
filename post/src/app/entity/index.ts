@@ -1,3 +1,3 @@
-import {Product,ProductsData} from './Post'
+import {Post,PostData} from './Post'
 
-export {Product,ProductsData}
+export {Post,PostData}

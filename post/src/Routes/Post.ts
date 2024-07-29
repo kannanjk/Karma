@@ -1,34 +1,34 @@
 import express from 'express'
-import { CreateProduct } from '../Controller/CreatePost'
-import { IProductRepositry } from '../interface/IPostRepositry'
-import { IProductItractor } from '../interface/IPostIntractor'
-import { ProductIntractor } from '../Intractor/PostIntractor'
+import { CreatePost } from '../Controller/CreatePost'
+import { IPostRepositry } from '../interface/IPostRepositry'
+import { IPostItractor } from '../interface/IPostIntractor'
+import { PostIntractor } from '../Intractor/PostIntractor'
 import { Container } from 'inversify'
-import { ProductRepositry } from '../Repositry/PostRepositry'
-import { PRODUCT_INTERFACE } from '../utils'
-import { GetAllProduct } from '../Controller/GetAllPost'
+import { PostRepositry } from '../Repositry/PostRepositry'
+import { POST_INTERFACE } from '../utils'
+import { GetAllPost } from '../Controller/GetAllPost'
 
 const container = new Container()
 
 container
-    .bind<IProductRepositry>(PRODUCT_INTERFACE.ProductRepositry)
-    .to(ProductRepositry)
+    .bind<IPostRepositry>(POST_INTERFACE.PostRepositry)
+    .to(PostRepositry)
 container
-    .bind<IProductItractor>(PRODUCT_INTERFACE.ProductIntractor)
-    .to(ProductIntractor)
+    .bind<IPostItractor>(POST_INTERFACE.PostIntractor)
+    .to(PostIntractor)
 container
-    .bind(PRODUCT_INTERFACE.CreateProduct)
-    .to(CreateProduct)
+    .bind(POST_INTERFACE.CreatePost)
+    .to(CreatePost)
 container
-    .bind(PRODUCT_INTERFACE.GetAllProduct)
-    .to(GetAllProduct)
+    .bind(POST_INTERFACE.GetAllPost)
+    .to(GetAllPost)
 
-const createProd = container.get<CreateProduct>(PRODUCT_INTERFACE.CreateProduct)
-const getAllpro = container.get<GetAllProduct>(PRODUCT_INTERFACE.GetAllProduct)
+const createPost = container.get<CreatePost>(POST_INTERFACE.CreatePost)
+const getAllpost = container.get<GetAllPost>(POST_INTERFACE.GetAllPost)
 
 const app = express.Router()
 
-app.post('/createPost', createProd.OnCreateProduct.bind(createProd))
-app.get('/getAllPost', getAllpro.OnGetallProdu.bind(getAllpro))
+app.post('/createPost', createPost.OnCreatePost.bind(createPost))
+app.get('/getAllPost', getAllpost.OnGetallPost.bind(getAllpost))
 
 export default app

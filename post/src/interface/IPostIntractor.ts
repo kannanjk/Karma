@@ -1,7 +1,7 @@
  
 
- export interface IProductItractor{
-    createProduct(input:any):any
-    GetAllProduct():any
-    GetOneProduct(input:any):any
+ export interface IPostItractor{
+    createPost(input:any):any
+    GetAllPost():any
+    GetOnePost(input:any):any
  }

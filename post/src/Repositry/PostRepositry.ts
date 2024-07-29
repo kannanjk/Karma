@@ -1,23 +1,26 @@
-import { Product } from "app/entity";
-import { IProductRepositry } from "interface/IPostRepositry";
-import { ProductModel } from '../app/Database/Schema/PostModel'
+import { Post } from "app/entity";
+import { IPostRepositry } from "interface/IPostRepositry";
+import { PostModel } from '../app/Database/PostSchema/PostModel'
 import { injectable } from "inversify";
-
+ 
 @injectable()
-export class ProductRepositry implements IProductRepositry {
-    async CreateProduct(input: Product): Promise<Product> {
-        const pro = new ProductModel(input)
+export class PostRepositry implements IPostRepositry {
+    async CreatePost(input: Post): Promise<Post> {
+        
+        const pro = new PostModel(input)
         const data = await pro.save()
+        console.log(data);
         return data
+        
     }
-    async GetAllProducts(): Promise<Product[]> {
-        const data = await ProductModel.find()
+    async GetAllPosts(): Promise<Post[]> {
+        const data = await PostModel.find()
         if (data) {
             return data
         }
     }
-    async getOneProduct(input: Product): Promise<Product> {
-        const data = await ProductModel.findById(input)
+    async getOnePost(input: Post): Promise<Post> {
+        const data = await PostModel.findById(input)
         return data
     }
 } 

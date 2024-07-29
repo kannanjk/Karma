@@ -1,7 +1,7 @@
-import { Product } from "app/entity";
+import { Post } from "app/entity";
 
-export interface IProductRepositry {
-    CreateProduct(input: Product): Promise<Product>
-    GetAllProducts(): Promise<Product[]>
-    getOneProduct(input: Product): Promise<Product>
+export interface IPostRepositry { 
+    CreatePost(input: Post): Promise<Post>
+    GetAllPosts(): Promise<Post[]>
+    getOnePost(input: Post): Promise<Post>
 }

@@ -1,19 +1,19 @@
 import { NextFunction, Request, Response } from "express";
-import { IProductItractor } from "interface/IPostIntractor";
+import { IPostItractor } from "interface/IPostIntractor";
 import { inject, injectable } from "inversify";
-import { PRODUCT_INTERFACE } from "../utils";
+import { POST_INTERFACE } from "../utils";
 
 @injectable()
-export class GetAllProduct {
-    private intractor: IProductItractor
+export class GetAllPost {
+    private intractor: IPostItractor
     constructor(
-        @inject(PRODUCT_INTERFACE.ProductIntractor) intractor: IProductItractor
+        @inject(POST_INTERFACE.PostIntractor) intractor: IPostItractor
     ) {
         this.intractor = intractor
     }
-    async OnGetallProdu(req: Request, res: Response, next: NextFunction) {
+    async OnGetallPost(req: Request, res: Response, next: NextFunction) {
         try {
-            const data = await this.intractor.GetAllProduct()
+            const data = await this.intractor.GetAllPost()
             if (data) {
                 res.send({
                     message: "Prodect found",

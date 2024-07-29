@@ -1,23 +1,23 @@
-import { IProductRepositry } from "../interface/IPostRepositry";
-import { IProductItractor } from "../interface/IPostIntractor";
+import { IPostRepositry } from "../interface/IPostRepositry";
+import { IPostItractor } from "../interface/IPostIntractor";
 import { inject, injectable } from "inversify";
-import { PRODUCT_INTERFACE } from "../utils";
+import { POST_INTERFACE } from "../utils";
 
 @injectable()
-export class ProductIntractor implements IProductItractor {
-    private repositry: IProductRepositry
+export class PostIntractor implements IPostItractor {
+    private repositry: IPostRepositry
     constructor(
-        @inject(PRODUCT_INTERFACE.ProductRepositry) repositry: IProductRepositry
+        @inject(POST_INTERFACE.PostRepositry) repositry: IPostRepositry
     ) {
         this.repositry = repositry
     }
-    createProduct(input: any) {
-        return this.repositry.CreateProduct(input)
+    createPost(input: any) {
+        return this.repositry.CreatePost(input)
     }
-  GetAllProduct() {
-      return this.repositry.GetAllProducts()
-  }
-  GetOneProduct(input: any) {
-    return this.repositry.getOneProduct(input)
-}
+    GetAllPost() {
+        return this.repositry.GetAllPosts()
+    }
+    GetOnePost(input: any) {
+        return this.repositry.getOnePost(input)
+    }
 }

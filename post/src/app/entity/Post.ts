@@ -1,23 +1,27 @@
-export interface ProductsData {
-    title: string
-    description: string
-    stock: number
-    price: number
+import { Types } from 'mongoose';
+
+export interface PostData {
+    user: Types.ObjectId
+    content: string
     image: string
+    likes: string[]
+    comments: string[]
+    updatedAt: string;
 }
 
-export class Product {
-    title: string
-    description: string
-    stock: number
-    price: number
-    image: string
+export class Post {
+    user: Types.ObjectId
+    content?: string
+    image?: string
+    likes: string[]
+    comments: string[]
+    updatedAt: string;
 
-    constructor({ title, description, stock, price, image }: ProductsData) {
-        this.title = title
-        this.description = description
-        this.stock = stock
-        this.price = price
+    constructor({ user, content,comments,image,likes }: PostData) {
+        this.user = user
+        this.content = content
+        this.comments = comments
+        this.likes = likes
         this.image = image
     }
 }

@@ -1,1 +1,1 @@
-export * from './appProduct'
+export * from './appPost'

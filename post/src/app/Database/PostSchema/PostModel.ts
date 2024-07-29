@@ -6,6 +6,7 @@ interface PostAttrs {
     image: string
     likes: string[]
     comments: string[]
+    hashtag:string[]
 }
 
 interface PostModel extends mongoose.Model<PostDoc> {
@@ -18,17 +19,17 @@ interface PostDoc extends mongoose.Document {
     image: string
     likes: string[]
     comments: string[]
+    hashtag:string[]
     updatedAt: string;
 }
 
 const PostSchema = new mongoose.Schema(
     {
         user: {
-            type: mongoose.Schema.Types.ObjectId,
+            type:Number,
             require: true,
-            ref: "User",
         },
-        content: {
+        content: { 
             type: String,
             require: true,
         },
@@ -36,18 +37,8 @@ const PostSchema = new mongoose.Schema(
             type: String,
             require: true,
         },
-        likes: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User",
-            },
-        ],
-        comments: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User",
-            }
-        ],
+        likes: [],
+        comments: [],
         hashtag:[],
     },
     { timestamps: true }
