@@ -36,4 +36,10 @@ export class UserIntractor implements IUserInteractor {
     uploadImage(data: any) { 
         return this.repositry.uploadImage(data)
     }
+    flowwUser(id: number, flower: number) {
+        return this.repositry.follwUser(id,flower)
+    }
+    UnFlowwUser(id: number, flower: number) {
+        return this.repositry.unFollwUser(id,flower)
+    }
 }

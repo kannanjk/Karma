@@ -27,7 +27,7 @@ const Forms: React.FC<FormsProp> = ({
     const onSubmit = useCallback(async () => {
         try {
             if (body) {   
-               const post ={
+               const post ={ 
                 content:body,
                 user:user?.id
                }             

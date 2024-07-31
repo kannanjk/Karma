@@ -1,24 +1,27 @@
-import { getUser } from '@/Api/userApi'
+import { follwUser, getUser, unFollwUser } from '@/Api/userApi'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppSelector } from '@/Redux/Store'
 import { BiCalendar } from 'react-icons/bi'
 import { format } from 'date-fns'
 import EditModel from '../Modals/EditModel'
+import useLoginModal from '@/hooks/UseLoginModal'
+import toast from 'react-hot-toast'
 
 interface UserProp {
     userId: any
 }
 
 const UserBio: React.FC<UserProp> = ({ userId }) => {
-
-    const [editModal, setEdimodal] = useState<any>(false)
-
-    const [user1, setUser1] = useState<any>({})
-
     const { user } = useAppSelector((state) =>
         state.user
     )
 
+    const [editModal, setEdimodal] = useState<any>(false)
+
+    const [user1, setUser1] = useState<any>()
+    const [following, setFollowing] = useState(false)
+
+    const loginModal = useLoginModal()
 
     const createsAt = useMemo(() => {
         if (!user?.created_at) {
@@ -27,6 +30,26 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
             return format(new Date(user.created_at), 'MMMM yyyy')
         }
     }, [user?.created_at])
+    const CheckUser = async () => {
+        if (user?.id && user1?.id) {
+            const res = await follwUser(user1?.id, user?.id)
+            if (res.success) {
+                toast.success(res.message)
+            }
+        } else {
+            loginModal.onOpen()
+        }
+    }
+    const unfollw = async () => {
+        if (user?.id && user1?.id) {
+            const res = await unFollwUser(user1?.id, user?.id)
+            if (res?.success) {
+                toast.success(res.message)
+            }
+        } else {
+            loginModal.onOpen()
+        }
+    }
 
     useEffect(() => {
         getUser(userId).then((data: any) => {
@@ -36,7 +59,14 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
                 return
             }
         })
-    })
+        user1?.followers.findIndex((rt: any) => {
+            if (rt.followingId == user?.id) {
+                setFollowing(true)
+            } else {
+
+            }
+        })
+    }, [user1, user, userId])
     function fun() {
         setEdimodal(true)
     }
@@ -44,20 +74,29 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
         <div className='border-b-[1px] border-neutral-800 pb-4'>
             <div className='flex justify-end p-2'>
                 {
-                    user1 && user ?
-                        userId == user.id ? (
-                            <>
-                                <p className='text-white cursor-pointer' onClick={()=>fun()} >Edit profile</p>
-                                <EditModel
-                                    editModal={editModal}
-                                    setEdimodal={setEdimodal}
-                                    data={user}
-                                />
-                            </>
-                        ) :
-                            (
-                                <p className='text-white'>Folw</p>
-                            ) : ''
+                    userId == user?.id ? (
+                        <>
+                            <p className='text-white cursor-pointer' onClick={() => fun()} >Edit profile</p>
+                            <EditModel
+                                editModal={editModal}
+                                setEdimodal={setEdimodal}
+                                data={user}
+                            />
+                        </>
+                    ) :
+                        (
+                            following ?
+                                <button
+                                    onClick={unfollw}
+                                    className={`disabled:opacity-70 disabled:cursor-not-allowed rounded-full font-semibold hover:opacity-80 transition border-2 bg-white text-black border-black text:md px-4 py-2`}>
+                                    UnFollw
+                                </button> :
+                                <button
+                                    onClick={CheckUser}
+                                    className={`disabled:opacity-70 disabled:cursor-not-allowed rounded-full font-semibold hover:opacity-80 transition border-2 bg-white text-black border-black text:md px-4 py-2`}>
+                                    Follw
+                                </button>
+                        )
                 }
             </div>
             <div className='mt-8 px-4'>
@@ -81,9 +120,11 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
                     </p>
                 </div>
                 <div className='flex flex-row items-center mt-4 gap-6'>
+
+
                     <div className='flex flex-row items-center gap-1'>
                         <p className='text-white'>
-                            {user?.following ? Object.keys(user?.following).length : ''}
+                            {user1?.following ? Object.keys(user1?.following).length : ''}
                         </p>
                         <p className='text-neutral-500'>
                             Following
@@ -91,7 +132,7 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
                     </div>
                     <div className='flex flex-row items-center gap-1'>
                         <p className='text-white'>
-                            {user?.following ? Object.keys(user?.followers).length : ''}
+                            {user1?.followers ? Object.keys(user1?.followers).length : ''}
                         </p>
                         <p className='text-neutral-500'>
                             Followers

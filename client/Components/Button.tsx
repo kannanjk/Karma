@@ -5,8 +5,8 @@ interface ButtonProps {
     secondry?: boolean
     fullWidth?: boolean
     large?: boolean
-    onClick: () => void
-    disabled?: boolean
+    onClick?: () => void
+    disabled?: boolean 
     outline?: boolean
 }
 

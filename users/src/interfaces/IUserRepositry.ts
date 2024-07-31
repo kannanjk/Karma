@@ -9,4 +9,6 @@ export interface IUserRepositry {
    getUserPro(data:User):Promise<User>
    getUserData(data:number):Promise<User>
    uploadImage(data:any):Promise<any>
+   follwUser(id:number,flower:number):Promise<User>
+   unFollwUser(id:number,flower:number):Promise<User>
 } 

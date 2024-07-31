@@ -8,4 +8,6 @@ export interface IUserInteractor {
     getUserprofile(data: any): any
     getUserData(data:any):any
     uploadImage(data:any):any
+    flowwUser(id:number,flower:number):any
+    UnFlowwUser(id:number,flower:number):any
 }  

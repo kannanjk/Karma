@@ -12,7 +12,6 @@ export class UserRepositry implements IUserRepositry {
     constructor() {
         this._prisma = new PrismaClient()
     }
-
     async create({ name, email, password }: User): Promise<User> {
         const check = await this._prisma.user.findUnique({
             where: {
@@ -98,21 +97,53 @@ export class UserRepositry implements IUserRepositry {
                 id: data,
             },
             include: {
-                followers: {
-                    select: { followerId: true }
-                },
-                following: {
-                    select: { followingId: true }
-                },
+                followers: true,
+                following: true,
             }
         })
         return user
     }
-    async uploadImage( data: any): Promise<any> {
+    async uploadImage(data: any): Promise<any> {
         const fileBuffer_code = await fileBuffer(data.file.data);
         const res = await uploadImageToBucket(fileBuffer_code, data.file.mimetype)
         console.log(res);
-        
+
         return res
     }
+    async follwUser(following: number, follower: number): Promise<any> {
+        const user = await this._prisma.follow.findUnique({
+            where: {
+                followerId_followingId: {
+                    followerId: following,
+                    followingId: follower,
+                },
+            },
+        })
+
+        if (following === follower) {
+            console.log("same user");
+        } else {
+            if (user) {
+                console.log(user);
+            } else {
+                const creating = await this._prisma.follow.create({
+                    data: {
+                        followerId: following,
+                        followingId: follower
+                    }
+                })
+            }
+        }
+        return
+    }
+    async unFollwUser(follower: number, following: number): Promise<any> {
+        const deleting = await this._prisma.follow.deleteMany({
+            where: {
+                followerId: follower,
+                followingId: following
+            }
+        })
+        return deleting
+    }
+
 }

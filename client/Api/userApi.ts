@@ -53,10 +53,40 @@ export const getCurrentUser = async () => {
     }
 }
 
-export const uploadImage = async ( data: any) => {
+export const uploadImage = async (data: any) => {
     try {
         const res = await API.post('/user/auth//uploadImage', data)
     } catch (error) {
         console.log();
+    }
+}
+
+export const follwUser = async (followingId: number, followerId: number) => {
+    const data = {
+        followingId: followingId,
+        followerId: followerId
+    }
+    try {
+        const res = await API.post('/user/auth/follwUser', data)
+        return res.data
+    } catch (error) {
+        console.log();
+
+    }
+}
+
+export const unFollwUser = async (followingId: number, followerId: number) => {
+    const data = {
+        followingId: followingId,
+        followerId: followerId
+    }
+    try {
+        const res = await API.post('/user/auth/unFollwUser', data)
+        console.log(res);
+        
+        return res.data
+    } catch (error) {
+        console.log();
+
     }
 }
