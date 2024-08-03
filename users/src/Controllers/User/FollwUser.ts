@@ -17,7 +17,7 @@ export class FollwUser {
         try {
             const data = await this.interector.flowwUser(followingId, followerId)  
             res.send({
-                message: 'Follw updated Success!',
+                message: 'Follw has been sent!',
                 success: true,
                 data: data
             })

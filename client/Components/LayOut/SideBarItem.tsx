@@ -14,11 +14,11 @@ interface SideBarItemProp {
 }
 
 const SideBarItem: React.FC<SideBarItemProp> = ({
-  label, href, icon: Icon, onClick,auth
+  label, href, icon: Icon, onClick, auth
 }) => {
   const { user } = useAppSelector((state) =>
     state.user
-)
+  )
   const router = useRouter()
   const loginModal = useLoginModal()
   const handleClick = useCallback(() => {
@@ -28,7 +28,7 @@ const SideBarItem: React.FC<SideBarItemProp> = ({
     if (auth && !user) {
       loginModal.onOpen()
     }
-   else if (href) {
+    else if (href) {
       router.push(href)
     }
   }, [onClick, auth, user, href, loginModal, router])

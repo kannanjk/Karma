@@ -6,6 +6,7 @@ import toast from "react-hot-toast"
 import Button from "./Button"
 import Avathar from "./Avathar"
 import { createPost } from "@/Api/Post"
+import LoadingModal from "./Modals/LoadingModel"
 
 interface FormsProp {
     placeholder: string
@@ -18,6 +19,7 @@ const Forms: React.FC<FormsProp> = ({
 }) => {
     const loginModal = useLoginModal()
     const registerModal = useRegisterModal()
+    const [loading, setLoading] = useState<boolean>(false)
     const [body, setBody] = useState('')
 
     const { user } = useAppSelector((state) =>
@@ -26,30 +28,33 @@ const Forms: React.FC<FormsProp> = ({
 
     const onSubmit = useCallback(async () => {
         try {
-            if (body) {   
-               const post ={ 
-                content:body,
-                user:user?.id
-               }             
+            if (body) {
+                const post = {
+                    content: body,
+                    user: user?.id
+                }
+                setLoading(true)
                 const res = await createPost(post)
                 if (res.success) {
                     toast.success(res.message)
                     setBody('')
+                    setLoading(false)
                 } else {
                     toast.error("try again")
                 }
-            }else{
+            } else {
                 toast.error("say somthing")
             }
         } catch (error) {
             toast.error("Somthing went error")
         }
-    }, [body]);
+    }, [body, user?.id]);
     return (
         <div className="border-b-[1px] border-neutral-800 px-5 py-2 ">
             {
                 user?.id ? (
                     <div className="flex flex-row gap-4">
+                        <LoadingModal loading={loading} />
                         <div>
                             <Avathar userId={user?.id} />
                         </div>
@@ -67,6 +72,7 @@ const Forms: React.FC<FormsProp> = ({
                             <hr
                                 className="opacity-0 peer-focus:opacity-100 h-[1px] w-full border-neutral-800 transition "
                             />
+                            <div className="text-white"><a href="">images </a><a href=""> videos</a></div>
                             <div className="mt-4 flex flex-row justify-end">
                                 <Button
                                     onClick={onSubmit}

@@ -31,7 +31,6 @@ export const getAllPost = async () => {
 }
 
 export const getUserPost = async (user: any) => {
-    console.log(user);
     try {
         const res = await API.post('/post/api/getUserPost', user)
         if (res.data.success) {
@@ -41,5 +40,19 @@ export const getUserPost = async (user: any) => {
         }
     } catch (error) {
         console.log(error);
+    }
+}
+
+export const likePost = async (userId: any, postId: any) => {
+    const data = {
+        userId:userId,
+        postId:postId
+    }
+    try {
+        const res= await API.post('/post/api/likePost',data)
+        return res.data
+    } catch (error) {
+        console.log(error);
+        
     }
 }

@@ -21,10 +21,6 @@ export class CreaterUser{
             const data = await this.interector.createUser(body)
             if (data.email) {
                 const token = generateToken(data)
-                req.session = {
-                    userJwt: token,
-                    email: data.email
-                }
                 return res.send({
                     message: "User created Success!",
                     success: true,

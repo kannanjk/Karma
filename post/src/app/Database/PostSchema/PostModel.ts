@@ -4,8 +4,8 @@ interface PostAttrs {
     user: Types.ObjectId
     content: string
     image: string
-    likes: string[]
-    comments: string[]
+    likes: number[]
+    comments: number[]
     hashtag:string[]
 }
 
@@ -17,7 +17,7 @@ interface PostDoc extends mongoose.Document {
     user: Types.ObjectId
     content: string
     image: string
-    likes: string[]
+    likes: number[]
     comments: string[]
     hashtag:string[]
     updatedAt: string;

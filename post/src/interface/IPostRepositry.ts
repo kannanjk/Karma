@@ -4,4 +4,5 @@ export interface IPostRepositry {
     CreatePost(input: Post): Promise<Post>
     GetAllPosts(): Promise<Post[]>
     getOnePost(input: Post): Promise<Post[]>
+    likePost(userId:number,postId:any):any
 }

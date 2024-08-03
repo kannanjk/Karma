@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import Avathar from '../Avathar'
 import { getUsers } from '@/Api/userApi'
+import LoadingModal from '../Modals/LoadingModel'
 
 const FolwBar = () => {
     const [users, setusers] = useState<any>([])
+    const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
+        setLoading(true)
         getUsers().then((data: any) => {
             setusers(data)
+            setLoading(false)
         })
-    })
+    },[])
     return (
         <div className=' lg:col-span-3 md:col-span-2 px-6 py-4 hidden lg:block'>
+            <LoadingModal loading={loading} />
             <div className='bg-neutral-800 rounded-xl p-4'>
                 <h2 className='text-white text-xl font-semibold '>Who to follow</h2>
                 <div className='flex flex-col gap-6 mt-4'>

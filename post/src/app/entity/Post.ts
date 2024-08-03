@@ -4,7 +4,7 @@ export interface PostData {
     user: Types.ObjectId
     content: string
     image: string
-    likes: string[]
+    likes: number[]
     comments: string[]
     updatedAt: string;
 }
@@ -13,7 +13,7 @@ export class Post {
     user: Types.ObjectId
     content?: string
     image?: string
-    likes: string[]
+    likes: number[]
     comments: string[]
     updatedAt: string;
 

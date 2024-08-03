@@ -8,6 +8,7 @@ import { PostRepositry } from '../Repositry/PostRepositry'
 import { POST_INTERFACE } from '../utils'
 import { GetAllPost } from '../Controller/GetAllPost'
 import { GetonePost } from '../Controller/GetUserPost'
+import { LikePost } from '../Controller/LikePost'
 
 const container = new Container()
 
@@ -26,15 +27,20 @@ container
 container
     .bind(POST_INTERFACE.GetonePost)
     .to(GetonePost)
+container
+    .bind(POST_INTERFACE.LikePost)
+    .to(LikePost)
 
 const createPost = container.get<CreatePost>(POST_INTERFACE.CreatePost)
 const getAllpost = container.get<GetAllPost>(POST_INTERFACE.GetAllPost)
 const getUserPost = container.get<GetonePost>(POST_INTERFACE.GetonePost)
+const likePost = container.get<LikePost>(POST_INTERFACE.LikePost)
 
 const app = express.Router()
 
 app.post('/createPost', createPost.OnCreatePost.bind(createPost))
 app.get('/getAllPost', getAllpost.OnGetallPost.bind(getAllpost))
-app.post('/getUserPost',getUserPost.OnGetUserProduct.bind(getUserPost))
+app.post('/getUserPost', getUserPost.OnGetUserProduct.bind(getUserPost))
+app.post('/likePost', likePost.OnLikePost.bind(likePost))
 
 export default app

@@ -3,5 +3,6 @@ export const POST_INTERFACE = {
     PostIntractor: Symbol.for("PostIntractor"),
     CreatePost: Symbol.for("CreatePost"),
     GetAllPost: Symbol.for("GetAllPost"),
-    GetonePost:Symbol.for("GetOnePost")
+    GetonePost:Symbol.for("GetOnePost"),
+    LikePost:Symbol.for("LikePost")
 }
