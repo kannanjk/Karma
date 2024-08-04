@@ -13,7 +13,6 @@ export class LikePost {
     }
     async OnLikePost(req: Request, res: Response, next: NextFunction) {
         const { userId, postId } = req.body
-        console.log("userId:" + userId + " postId:" + postId);
         try {
             if (userId && postId) {
                 await this.intractor.likePost(userId, postId)

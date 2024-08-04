@@ -10,4 +10,6 @@ export interface IUserInteractor {
     uploadImage(data:any):any
     flowwUser(id:number,flower:number):any
     UnFlowwUser(id:number,flower:number):any
+    getNotifications(id:number):any
+    updateNotification(id:any):any
 }  

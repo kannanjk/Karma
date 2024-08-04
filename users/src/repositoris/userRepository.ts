@@ -5,6 +5,7 @@ import { IUserRepositry } from "../interfaces/IUserRepositry";
 import { injectable } from "inversify";
 import { uploadImageToBucket } from "../app/externelService/awsS3Bucket";
 import { fileBuffer } from "../app/externelService/resiseImageSharp";
+import { Notification } from "entities/Notification";
 
 @injectable()
 export class UserRepositry implements IUserRepositry {
@@ -86,7 +87,8 @@ export class UserRepositry implements IUserRepositry {
             },
             include: {
                 followers: true,
-                following: true
+                following: true,
+                notifications: true
             },
         })
         return user
@@ -99,6 +101,7 @@ export class UserRepositry implements IUserRepositry {
             include: {
                 followers: true,
                 following: true,
+                notifications: true
             }
         })
         return user
@@ -132,6 +135,15 @@ export class UserRepositry implements IUserRepositry {
                         followingId: follower
                     }
                 })
+                if (creating.id) {
+                    await this._prisma.notification.create({
+                        data: {
+                            message: "Someone followed you!",
+                            read: true,
+                            userId: following
+                        }
+                    })
+                }
             }
         }
         return
@@ -143,7 +155,39 @@ export class UserRepositry implements IUserRepositry {
                 followingId: following
             }
         })
+        if (deleting.count == 1) {
+            await this._prisma.notification.create({
+                data: {
+                    message: "Someone Unfollowed you!",
+                    read: true,
+                    userId: follower
+                }
+            })
+        }
         return deleting
     }
+    async GetNotifications(userId: number): Promise<Notification[]> {
+        const noti = await this._prisma.notification.findMany({
+            where: {
+                userId: userId
+            },
+            orderBy: {
+                created_at: 'desc'
+            }
+        });
+        return noti
+    }
+    async updateNotification(id: number): Promise<null> {
 
+        const result = await this._prisma.notification.updateMany({
+            where: {
+                userId: id,
+                read: true
+            },
+            data: {
+                read: false
+            }
+        });
+        return null
+    }
 }

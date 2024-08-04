@@ -23,7 +23,7 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
     const [following, setFollowing] = useState<boolean>(false)
 
     const loginModal = useLoginModal()
-
+    
     const createsAt = useMemo(() => {
         if (!user?.created_at) {
             return null

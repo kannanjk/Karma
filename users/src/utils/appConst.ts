@@ -1,4 +1,4 @@
-import { UnFollwUser } from "Controllers/User/UnFollwUser"
+import { UpdateNotifications } from "Controllers/User/UpdateNotification"
 
 export const INTERFACE_TYPE = {
     UserRepositry: Symbol.for('UserRepositry'),
@@ -10,7 +10,9 @@ export const INTERFACE_TYPE = {
     GetUserData: Symbol.for('GetUserData'),
     uploadImage: Symbol.for('uploadImage'),
     FollwUser: Symbol.for('FollwUser'),
-    UnFollwUser: Symbol.for('UnFollwUser')
+    UnFollwUser: Symbol.for('UnFollwUser'),
+    GetNotifications: Symbol.for('GetNotifications'),
+    UpdateNotifications:Symbol.for("UpdateNotifications")
 }
 
 export const ADMIN_TYPE = {

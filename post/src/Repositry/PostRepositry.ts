@@ -25,16 +25,19 @@ export class PostRepositry implements IPostRepositry {
     }
 
     async likePost(userId: number, postId: any) {
-        // console.log("userId:" + userId + "postId" + postId);
         const post = await PostModel.findById(postId)
-
         if (!post.likes.includes(userId)) {
             const up = await post.updateOne({
                 $push: {
                     likes: userId
                 }
             })
-            console.log(up);
+           if (up.modifiedCount) {
+            const notification = {
+
+            }
+            // const noti = await 
+           }
             return
         } else {
             const up = await post.updateOne({

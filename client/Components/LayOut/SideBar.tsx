@@ -4,19 +4,43 @@ import SideBarLogo from "./SideBarLogo"
 import SideBarItem from "./SideBarItem"
 import { BiLogOut } from "react-icons/bi"
 import SideBarTweetButton from "./SideBarTweetButton"
-import { useAppSelector } from "@/Redux/Store"
-import { useDispatch } from "react-redux"
-import axios from "axios"
-import { useEffect } from "react"
-import { setUser } from "@/Redux/Features/GetUser"
 import toast from "react-hot-toast"
-import { getCurrentUser } from "@/Api/userApi"
+import { useEffect, useState } from "react"
+import { GetNotifications } from "@/Api/userApi"
 
 interface User {
     user: any
 }
 
-const SideBar: React.FC<User> = ({ user }) => {    
+const SideBar: React.FC<User> = ({ user }) => {
+    const [notification, setNotification] = useState([])
+    const [noti, setNoti] = useState(false)
+
+    useEffect(() => {
+        if (user?.id) {
+            const io = {
+                userId: user?.id
+            }
+            GetNotifications(io).then((da: any) => {
+                if (da?.success) {
+                    setNotification(da?.data)
+                } else {
+                    return
+                }
+            })
+        }
+        if (notification) {
+            notification?.map((item: any) => {
+                if (item && item.read === true) {
+                    setNoti(true)
+                } else {
+                    setNoti(false)
+                }
+            })
+        }
+    }, [notification, user?.id])
+
+
     const SideBar = [
         {
             lable: "Home",
@@ -25,9 +49,10 @@ const SideBar: React.FC<User> = ({ user }) => {
         },
         {
             lable: "Notification",
-            href: '/notification',
+            href: `/notification/${user?.id}`,
             icon: BsBellFill,
-            auth: true
+            auth: true,
+            alert: noti === true
         },
         {
             lable: "Profile",
@@ -54,6 +79,7 @@ const SideBar: React.FC<User> = ({ user }) => {
                                 label={item.lable}
                                 icon={item.icon}
                                 auth={item.auth}
+                                alert={item.alert}
                             />
                         ))
                     }

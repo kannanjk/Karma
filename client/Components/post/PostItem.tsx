@@ -29,9 +29,6 @@ const PostItem: React.FC<PostItemProp> = ({
         state.user
     )
 
-    console.log(data);
-    
-
     const onClick = useCallback((event: any) => {
         setLoading(true)
         const postId = data?._id

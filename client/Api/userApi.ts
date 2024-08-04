@@ -83,10 +83,42 @@ export const unFollwUser = async (followingId: number, followerId: number) => {
     try {
         const res = await API.post('/user/auth/unFollwUser', data)
         console.log(res);
-        
+
         return res.data
     } catch (error) {
         console.log();
+
+    }
+}
+
+export const GetNotifications = async (userId: any) => {
+    try {
+        if (userId) {
+            const res = await API.post('/user/auth/getNotifications', userId)
+            if (res.data.success) {
+                return res.data
+            } else {
+                return
+            }
+        }
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
+export const updateNotifications = async (userId: any) => {
+    try {
+        if (userId) {
+            const res = await API.post('/user/auth/updateNotifications', userId)
+            if (res.data.success) {
+                return res.data
+            } else {
+                return
+            }
+        }
+    } catch (error) {
+        console.log(error);
 
     }
 }

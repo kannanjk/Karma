@@ -39,7 +39,6 @@ const CommentItem: React.FC<CommentProrp> = ({ data }) => {
             return
         }
     }, [data?. created_at])
-    console.log(data);
     
     return (
         <div className="border-b-[1px] border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition ">

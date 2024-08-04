@@ -14,17 +14,18 @@ datasource db {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  email        String   @unique
-  name         String?
-  access       Boolean  @default(true)
-  password     String
-  profileImage String?
-  coverImage   String?
-  bio          String?
-  created_at   DateTime @default(now())
-  followers    Follow[] @relation("UserFollowers")
-  following    Follow[] @relation("UserFollowing")
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  name          String?
+  access        Boolean        @default(true)
+  password      String
+  profileImage  String?
+  coverImage    String?
+  bio           String?
+  created_at    DateTime       @default(now())
+  followers     Follow[]       @relation("UserFollowers")
+  following     Follow[]       @relation("UserFollowing")
+  notifications Notification[] @relation("UserNotifications")
 }
 
 model Follow {
@@ -35,4 +36,13 @@ model Follow {
   followingId Int
 
   @@unique([followerId, followingId])
+}
+
+model Notification {
+  id         Int      @id @default(autoincrement())
+  message    String
+  read       Boolean  @default(false)
+  userId     Int
+  user       User     @relation("UserNotifications", fields: [userId], references: [id])
+  created_at DateTime @default(now())
 }
