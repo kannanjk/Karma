@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
-import React, { useCallback } from "react"
+import React, { useCallback, useState } from "react"
 import { BiArrowBack } from "react-icons/bi"
+import LoadingModal from "../Modals/LoadingModel"
 
 interface HeaderProps {
     label: string
@@ -9,11 +10,14 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ label, showBackArrow }) => {
     const router = useRouter()
+    const [loading, setLoading] = useState<boolean>(false)
     const handleBack = useCallback(() => {
+        // setLoading(true)
         router.back()
     }, [router])
     return (
         <div className="border-b-[1px] border-neutral-800 p-5 ">
+            <LoadingModal loading={loading} />
             <div className="flex flex-row items-center gap-2 ">
                 {
                     showBackArrow && (

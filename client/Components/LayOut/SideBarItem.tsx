@@ -1,9 +1,10 @@
 import { useAppSelector } from "@/Redux/Store"
 import axios from "axios"
 import { useRouter } from "next/router"
-import React, { useCallback } from "react"
+import React, { useCallback, useState } from "react"
 import { IconType } from "react-icons"
 import useLoginModal from "@/hooks/UseLoginModal"
+import LoadingModal from "../Modals/LoadingModel"
 
 interface SideBarItemProp {
   label: string
@@ -16,6 +17,7 @@ interface SideBarItemProp {
 const SideBarItem: React.FC<SideBarItemProp> = ({
   label, href, icon: Icon, onClick, auth
 }) => {
+  const [loading, setLoading] = useState<boolean>(false)
   const { user } = useAppSelector((state) =>
     state.user
   )
@@ -23,6 +25,7 @@ const SideBarItem: React.FC<SideBarItemProp> = ({
   const loginModal = useLoginModal()
   const handleClick = useCallback(() => {
     if (onClick) {
+    setLoading(true)
       return onClick()
     }
     if (auth && !user) {
@@ -36,6 +39,7 @@ const SideBarItem: React.FC<SideBarItemProp> = ({
     <div
       onClick={handleClick}
       className="flex flex-row items-center">
+        <LoadingModal loading={loading} />
       <div className="relative rounded-full h-14 w-14 flex 
             items-center justify-center p-4 hover:bg-slate-300
             hover:bg-opacity-10 cursor-pointer lg:hidden

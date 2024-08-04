@@ -23,4 +23,14 @@ export class PostIntractor implements IPostItractor {
     likePost(userId: any, postId: any) {
         return this.repositry.likePost(userId, postId)
     }
+    createComment(input:any) {
+       return this.repositry.CreateComment(input)
+    }
+    
+    getOnePost(input: any) {
+        return this.repositry.getPost(input)
+    }
+    getComment(input: any) {
+        return this.repositry.getComment(input)
+    }
 }

@@ -5,7 +5,7 @@ import { useCallback } from "react"
 
 interface AvatharProp {
     userId: string
-    isLarge?: boolean
+    isLarge?: boolean 
     hasBorder?: boolean
     currentUser?:string
 }
@@ -13,9 +13,6 @@ interface AvatharProp {
 const Avathar: React.FC<AvatharProp> = ({
     userId, hasBorder, isLarge,currentUser
 }) => {
-    const { user } = useAppSelector((state) =>
-        state.user
-    )
     const router = useRouter()
     const onClick = useCallback((event: any) => {
         event.stopPropagation();

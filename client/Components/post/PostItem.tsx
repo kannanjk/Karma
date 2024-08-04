@@ -1,6 +1,5 @@
-import { getAllPost, likePost } from '@/Api/Post'
+import { likePost } from '@/Api/Post'
 import useLoginModal from '@/hooks/UseLoginModal'
-import { useRegisterModal } from '@/hooks/UseRegisterModal'
 import { useAppSelector } from '@/Redux/Store'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { useRouter } from 'next/router'
@@ -24,25 +23,36 @@ const PostItem: React.FC<PostItemProp> = ({
     const [user1, setUser1] = useState<any>([])
     const [loading, setLoading] = useState<boolean>(false)
     const [likeC, setLikec] = useState<any>(false)
-    const [like, setLike] = useState<any>(data?.likes ? Object.keys(data?.likes).length : '')
+    const [like, setLike] = useState(0)
+    const [comment, setComment] = useState(0)
     const { user } = useAppSelector((state) =>
         state.user
     )
-    // console.log(data);
 
+    console.log(data);
     
 
-    useEffect(() => {
+    const onClick = useCallback((event: any) => {
         setLoading(true)
+        const postId = data?._id
+        event.stopPropagation();
+        const url = `/posts/${postId}`
+        router.push(url)
+    }, [data?._id, router])
+
+    useEffect(() => {
         getUser(Number(userId)).then((dat: any) => {
             if (dat) {
+                setLoading(true)
                 setUser1(dat.data.data)
                 data?.likes.findIndex((rt: any) => {
                     if (rt == user?.id) {
-                    setLikec(true)
+                        setLoading(false)
+                       return setLikec(true)
                     } else {
-                    setLikec(false)
-                    } 
+                        setLoading(false)
+                        setLikec(false)
+                    }
                 })
                 setLoading(false)
             } else {
@@ -50,21 +60,26 @@ const PostItem: React.FC<PostItemProp> = ({
                 return
             }
         })
-    }, [data?.likes, user?.id, user1?.likes, userId])
+        if (data && data.likes && data.comments) {
+            setLike(Object.keys(data?.likes).length);
+            setComment( Object.keys(data.comments).length);
+        }
+    }, [data, user?.id, userId])
 
     const goToUser = useCallback((event: any) => {
         event.stopPropagation()
-        router.push(`/users/${user1?.id}`)
-    }, [user1?.id, router])
+        
+        router.push(`/users/${userId}`)
+    }, [router, userId])
 
     const onLike = useCallback(async (event: any) => {
         event.stopPropagation()
         if (!user) {
             loginModal.onOpen()
         } else {
+            setLikec((prev: any) => !prev);
+            likeC ? setLike((prev: any) => prev - 1) : setLike((prev: any) => prev + 1)
             if (user1?.id && data?._id) {
-                setLikec((prev: any) => !prev);
-                likeC ? setLike((prev: any) => prev - 1) : setLike((prev: any) => prev + 1)
                 const res = await likePost(user?.id, data?._id)
                 if (res.success) {
                     toast.success(res.message)
@@ -74,12 +89,12 @@ const PostItem: React.FC<PostItemProp> = ({
     }, [data?._id, likeC, loginModal, user, user1?.id])
 
     const createdAt = useMemo(() => {
-        if (data?.createdAt) {
-            return formatDistanceToNowStrict(new Date(data.createdAt))
+        if (data?. created_at) {
+            return formatDistanceToNowStrict(new Date(data. created_at))
         } else {
             return
         }
-    }, [data?.createdAt])
+    }, [data?. created_at])
 
     return (
         <div className='border-b-[1px] border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition '>
@@ -100,18 +115,26 @@ const PostItem: React.FC<PostItemProp> = ({
                         {data?.content}
                     </div>
                     <div className='flex flex-row items-center mt-3 gap-10'>
-                        <div onClick={onLike} className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition ${likeC ? 'text-red-600' : ''} hover:text-red-600`}>
-                            <AiOutlineHeart size={20} />
-                            <p>
-                                {/* {data?.like.length} */}
+                        <div
+                            onClick={onLike}
+                            className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition ${likeC ? 'text-red-600' : ''} hover:text-red-600`}
+                        >
+                            <div
+                                className={`p-1 rounded-full transition ${likeC ? 'bg-red-600 text-white' : ''}`}
+                                style={{ display: 'inline-flex' }}
+                            >
+                                <AiOutlineHeart size={20} />
+                            </div>
+                            <p className='text-white'>
                                 {like}
                             </p>
                         </div>
-                        <div className='flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-sky-500'>
+                        <div
+                            onClick={onClick}
+                            className='flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-sky-500'>
                             <AiOutlineMessage size={20} />
-                            <p>
-                                {/* {data?.comments.length} */}
-                                {data?.comments ? Object.keys(data?.comments).length : ''}
+                            <p className='text-white'>
+                                {comment}
                             </p>
                         </div>
                     </div>

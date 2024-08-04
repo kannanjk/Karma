@@ -1,3 +1,4 @@
 import {Post,PostData} from './Post'
+import {comment} from './Comments'
 
-export {Post,PostData}
+export {Post,PostData,comment}

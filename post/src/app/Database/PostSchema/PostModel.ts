@@ -1,4 +1,4 @@
-import mongoose, { mongo, Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 interface PostAttrs {
     user: Types.ObjectId
@@ -6,7 +6,7 @@ interface PostAttrs {
     image: string
     likes: number[]
     comments: number[]
-    hashtag:string[]
+    hashtag: string[]
 }
 
 interface PostModel extends mongoose.Model<PostDoc> {
@@ -19,17 +19,17 @@ interface PostDoc extends mongoose.Document {
     image: string
     likes: number[]
     comments: string[]
-    hashtag:string[]
+    hashtag: string[]
     updatedAt: string;
 }
 
 const PostSchema = new mongoose.Schema(
     {
         user: {
-            type:Number,
+            type: Number,
             require: true,
         },
-        content: { 
+        content: {
             type: String,
             require: true,
         },
@@ -39,9 +39,14 @@ const PostSchema = new mongoose.Schema(
         },
         likes: [],
         comments: [],
-        hashtag:[],
+        hashtag: [],
     },
-    { timestamps: true }
+    {
+        timestamps: {
+            createdAt: 'created_at', 
+            updatedAt: 'updated_at' 
+        }
+    }
 );
 
 const PostModel = mongoose.model<PostDoc, PostModel>('post', PostSchema)

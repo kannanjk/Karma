@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 
 export interface PostData {
     user: Types.ObjectId
-    content: string
+    content: string 
     image: string
     likes: number[]
     comments: string[]

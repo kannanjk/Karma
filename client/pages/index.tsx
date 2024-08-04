@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div>
       <Header label="Home" />
-      <Forms placeholder="What's happening" isComment postId={""} />
+      <Forms placeholder="What's happening" postId={""} />
       <PostFeed />
     </div>
   );

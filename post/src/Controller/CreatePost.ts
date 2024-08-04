@@ -13,14 +13,13 @@ export class CreatePost {
     }
     async OnCreatePost(req: Request, res: Response, next: NextFunction) {
         const body = req.body
-        console.log(body);
-        
         try {
             const data = await this.intractor.createPost(body)
             if (data) {
                 res.send({
                     message: "Post created!",
                     success: true,
+                    data:data
                 })
             } else {
                 res.send({
