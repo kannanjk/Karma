@@ -10,12 +10,9 @@ export class UploadImage {
         @inject(INTERFACE_TYPE.UserIntractor) interector: IUserInteractor
     ) { 
         this.interector = interector
-    }
+    } 
     async OnUploadImage(req: Request, res: Response, next: NextFunction) {
-        
-        const data = req.files
-        console.log(req.body);
-             
+        const data = req.body
         try {
             const upload = await this.interector.uploadImage(data)
         } catch (error) {

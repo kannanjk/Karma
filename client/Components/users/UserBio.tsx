@@ -23,7 +23,7 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
     const [following, setFollowing] = useState<boolean>(false)
 
     const loginModal = useLoginModal()
-    
+
     const createsAt = useMemo(() => {
         if (!user?.created_at) {
             return null
@@ -55,20 +55,14 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
 
     useEffect(() => {
         getUser(userId).then((data: any) => {
-            // setLoading(true)
             if (data) {
                 setUser1(data.data.data)
-                // setLoading(false)
                 setFollowing(false)
                 user1?.followers.findIndex((rt: any) => {
-                    // setLoading(true)
                     if (rt.followingId === user?.id) {
                         setFollowing(true)
-                        // setLoading(false)
                     } else {
-                        // setLoading(true)
                         setFollowing(false)
-                        // setLoading(false)
                     }
                 })
             } else {

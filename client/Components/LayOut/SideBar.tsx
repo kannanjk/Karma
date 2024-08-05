@@ -14,8 +14,7 @@ interface User {
 
 const SideBar: React.FC<User> = ({ user }) => {
     const [notification, setNotification] = useState([])
-    const [noti, setNoti] = useState<boolean>()
-    console.log(noti);
+    const [noti, setNoti] = useState<boolean>(false)
 
     useEffect(() => {
         if (user?.id) {
@@ -33,7 +32,6 @@ const SideBar: React.FC<User> = ({ user }) => {
         if (notification) {
             notification?.map((rt: any) => {
                 if (rt.read === true) {
-                    
                  return setNoti(true)
                 } 
             })
@@ -65,7 +63,7 @@ const SideBar: React.FC<User> = ({ user }) => {
         location.reload()
         toast.success("Logout success")
     }
-    return (
+    return ( 
         <div className="lg:col-span-3 md:col-span-2 col-span-2 h-full pr-4 md:pr-6">
             <div className="flex flex-col items-center">
                 <div className="space-y-2 lg:w-[230px] ">

@@ -1,6 +1,5 @@
 import Forms from "@/Components/Forms";
 import Header from "@/Components/LayOut/Header";
-import LoadinModal from "@/Components/Modals/LoadingModel";
 import PostFeed from "@/Components/post/PostFeed";
 
 export default function Home() {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import SideBar from "./LayOut/SideBar"
 import FolwBar from "./LayOut/FolwBar"
-import { getCurrentUser, getUsers } from "@/Api/userApi"
+import { getCurrentUser} from "@/Api/userApi"
 import { useDispatch } from "react-redux"
 import { setUser } from "@/Redux/Features/GetUser"
 import { useAppSelector } from "@/Redux/Store"
@@ -25,7 +25,7 @@ const Laout: React.FC<LayoutProps> = ({ children }) => {
             }
         })
        
-    })
+    }) 
     return (
         <div className="h-screen bg-black">
             <div className=" h-full ">

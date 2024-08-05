@@ -3,6 +3,9 @@ import { IPostRepositry } from "../interface/IPostRepositry";
 import { PostModel } from '../app/Database/PostSchema/PostModel'
 import { injectable } from "inversify";
 import { commentModel } from "../app/Database/PostSchema/CommentModel";
+import axios from "axios";
+
+const API = axios.create({ baseURL: "http://127.0.0.1:3005" })
 
 @injectable()
 export class PostRepositry implements IPostRepositry {
@@ -32,12 +35,11 @@ export class PostRepositry implements IPostRepositry {
                     likes: userId
                 }
             })
-           if (up.modifiedCount) {
-            const notification = {
+            if (up.modifiedCount) {
+                const notification = {
 
+                }
             }
-            // const noti = await 
-           }
             return
         } else {
             const up = await post.updateOne({
@@ -45,7 +47,6 @@ export class PostRepositry implements IPostRepositry {
                     likes: userId
                 }
             })
-            console.log(up);
             return
         }
     }
@@ -60,8 +61,10 @@ export class PostRepositry implements IPostRepositry {
                     comments: input.userId
                 }
             })
+            await API.get('/user/admin/getAllUser').then((data) => {
+                console.log(data.data);
+            })
         }
-
         return data
     }
 

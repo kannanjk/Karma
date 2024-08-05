@@ -21,7 +21,8 @@ interface EditPrif {
 const EditModel: React.FC<EditPrif> = ({ editModal, setEdimodal, data }) => {
 
     const [formData, setFormData] = useState({ ...data });
-    const [profileImage, setProfileImage] = useState<File | null>(null);
+    const [profileImage, setProfileImage] = useState<any>();
+    console.log(profileImage);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,7 +32,11 @@ const EditModel: React.FC<EditPrif> = ({ editModal, setEdimodal, data }) => {
         if (target && target.files && target.files[0]) {
             let img = target.files[0];
             if (target.name === "profileImage") {
-                setProfileImage(img);
+                const reader = new FileReader();
+                reader.readAsDataURL(img);
+                reader.onloadend = () => {
+                    setProfileImage(reader.result);
+                }
             }
         }
     };
@@ -42,10 +47,9 @@ const EditModel: React.FC<EditPrif> = ({ editModal, setEdimodal, data }) => {
             email: data?.email,
             name: formData.name,
             bio: formData.bio,
-            profileImage: profileImage?.name
+            profileImage: profileImage
         }
         const res = await updateUser(user)
-
         if (res.success) {
             setUser(res)
             setEdimodal(false)
@@ -53,15 +57,8 @@ const EditModel: React.FC<EditPrif> = ({ editModal, setEdimodal, data }) => {
         } else {
             toast.error(res.message)
         }
-
-        let UserData = formData;
         if (profileImage) {
-            const data = new FormData();
-            const fileName = Date.now() + profileImage.name;
-            data.append("name", fileName);
-            data.append("file", profileImage);
-            UserData.profileImage = fileName;
-            await uploadImage(data)
+            await uploadImage(user)
         }
     }
 

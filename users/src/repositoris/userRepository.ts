@@ -6,6 +6,7 @@ import { injectable } from "inversify";
 import { uploadImageToBucket } from "../app/externelService/awsS3Bucket";
 import { fileBuffer } from "../app/externelService/resiseImageSharp";
 import { Notification } from "entities/Notification";
+import { UploadImgToCloudinary } from "../app/externelService/Cloudinary";
 
 @injectable()
 export class UserRepositry implements IUserRepositry {
@@ -59,10 +60,12 @@ export class UserRepositry implements IUserRepositry {
             data: {
                 name: data.name,
                 bio: data.bio,
-                profileImage: data.profileImage,
+                profileImage: data.bio,
                 coverImage: data.coverImage
             },
         })
+        console.log(updated);
+        
         return updated
     }
     async getAllUser(): Promise<User[]> {
@@ -107,11 +110,8 @@ export class UserRepositry implements IUserRepositry {
         return user
     }
     async uploadImage(data: any): Promise<any> {
-        const fileBuffer_code = await fileBuffer(data.file.data);
-        const res = await uploadImageToBucket(fileBuffer_code, data.file.mimetype)
-        console.log(res);
-
-        return res
+        const res = await UploadImgToCloudinary(data.profileImage)
+        return
     }
     async follwUser(following: number, follower: number): Promise<any> {
         const user = await this._prisma.follow.findUnique({
@@ -155,7 +155,7 @@ export class UserRepositry implements IUserRepositry {
             }
         })
         if (deleting.count == 1) {
-           const a= await this._prisma.notification.create({
+            const a = await this._prisma.notification.create({
                 data: {
                     message: "Someone Unfollowed you!",
                     userId: follower
@@ -164,8 +164,8 @@ export class UserRepositry implements IUserRepositry {
             console.log(a);
         }
         console.log(deleting);
-        
-        
+
+
         return deleting
 
     }
