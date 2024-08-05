@@ -14,7 +14,8 @@ interface User {
 
 const SideBar: React.FC<User> = ({ user }) => {
     const [notification, setNotification] = useState([])
-    const [noti, setNoti] = useState(false)
+    const [noti, setNoti] = useState<boolean>()
+    console.log(noti);
 
     useEffect(() => {
         if (user?.id) {
@@ -23,23 +24,21 @@ const SideBar: React.FC<User> = ({ user }) => {
             }
             GetNotifications(io).then((da: any) => {
                 if (da?.success) {
-                    setNotification(da?.data)
+                    setNotification(da?.data) 
                 } else {
                     return
                 }
             })
-        }
+        } 
         if (notification) {
-            notification?.map((item: any) => {
-                if (item && item.read === true) {
-                    setNoti(true)
-                } else {
-                    setNoti(false)
-                }
+            notification?.map((rt: any) => {
+                if (rt.read === true) {
+                    
+                 return setNoti(true)
+                } 
             })
         }
     }, [notification, user?.id])
-
 
     const SideBar = [
         {
@@ -52,7 +51,7 @@ const SideBar: React.FC<User> = ({ user }) => {
             href: `/notification/${user?.id}`,
             icon: BsBellFill,
             auth: true,
-            alert: noti === true
+            alert: noti
         },
         {
             lable: "Profile",

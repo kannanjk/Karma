@@ -139,7 +139,6 @@ export class UserRepositry implements IUserRepositry {
                     await this._prisma.notification.create({
                         data: {
                             message: "Someone followed you!",
-                            read: true,
                             userId: following
                         }
                     })
@@ -156,15 +155,19 @@ export class UserRepositry implements IUserRepositry {
             }
         })
         if (deleting.count == 1) {
-            await this._prisma.notification.create({
+           const a= await this._prisma.notification.create({
                 data: {
                     message: "Someone Unfollowed you!",
-                    read: true,
                     userId: follower
                 }
             })
+            console.log(a);
         }
+        console.log(deleting);
+        
+        
         return deleting
+
     }
     async GetNotifications(userId: number): Promise<Notification[]> {
         const noti = await this._prisma.notification.findMany({

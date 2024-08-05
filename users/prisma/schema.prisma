@@ -41,7 +41,7 @@ model Follow {
 model Notification {
   id         Int      @id @default(autoincrement())
   message    String
-  read       Boolean  @default(false)
+  read       Boolean  @default(true)
   userId     Int
   user       User     @relation("UserNotifications", fields: [userId], references: [id])
   created_at DateTime @default(now())
