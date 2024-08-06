@@ -21,7 +21,7 @@ const UserHero: React.FC<UserProp> = ({ userId }) => {
         {
           user?.image && (
             <Image
-              src={user?.image}
+              src='https://res.cloudinary.com/dxzt4brja/image/upload/v1722919320/products/cok3p1e9gxlm71xn9nyn.jpg'
               fill
               alt='Cover image'
               style={{ objectFit: "cover" }}

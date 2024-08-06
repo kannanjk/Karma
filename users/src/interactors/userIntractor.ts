@@ -42,7 +42,6 @@ export class UserIntractor implements IUserInteractor {
     UnFlowwUser(id: number, flower: number) {
         return this.repositry.unFollwUser(id,flower)
     }
-    
     getNotifications(id: number) {
         return this.repositry.GetNotifications(id)
     }

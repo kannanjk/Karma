@@ -50,7 +50,7 @@ const EditModel: React.FC<EditPrif> = ({ editModal, setEdimodal, data }) => {
             profileImage: profileImage
         }
         const res = await updateUser(user)
-        if (res.success) {
+        if (res?.success) {
             setUser(res)
             setEdimodal(false)
             toast.success(res.message)

@@ -60,12 +60,9 @@ export class UserRepositry implements IUserRepositry {
             data: {
                 name: data.name,
                 bio: data.bio,
-                profileImage: data.bio,
                 coverImage: data.coverImage
             },
         })
-        console.log(updated);
-        
         return updated
     }
     async getAllUser(): Promise<User[]> {
@@ -111,6 +108,19 @@ export class UserRepositry implements IUserRepositry {
     }
     async uploadImage(data: any): Promise<any> {
         const res = await UploadImgToCloudinary(data.profileImage)
+        if (res) {
+           const update = await this._prisma.user.update({
+            where:{
+                email:data.email
+            },
+            data:{
+                profileImage: res.secure_url,
+                coverImage: data.coverImage
+            }
+           })
+            console.log(update);
+            
+        }
         return
     }
     async follwUser(following: number, follower: number): Promise<any> {
