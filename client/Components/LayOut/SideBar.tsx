@@ -1,4 +1,4 @@
-import { BsBellFill, BsHouse } from "react-icons/bs"
+import { BsBellFill, BsHouse,BsChatHeart } from "react-icons/bs"
 import { FaUser } from "react-icons/fa"
 import SideBarLogo from "./SideBarLogo"
 import SideBarItem from "./SideBarItem"
@@ -44,6 +44,11 @@ const SideBar: React.FC<User> = ({ user }) => {
             href: '/',
             icon: BsHouse
         },
+        { 
+            lable: "Chat",
+            href: `/chat/:id`,
+            icon: BsChatHeart
+        },
         {
             lable: "Notification",
             href: `/notification/${user?.id}`,
@@ -64,7 +69,7 @@ const SideBar: React.FC<User> = ({ user }) => {
         toast.success("Logout success")
     }
     return ( 
-        <div className="lg:col-span-3 md:col-span-2 col-span-2 h-full pr-4 md:pr-6">
+        <div className="lg:col-span-2 md:col-span-2 col-span-2 h-full pr-4 md:pr-6">
             <div className="flex flex-col items-center">
                 <div className="space-y-2 lg:w-[230px] ">
                     <SideBarLogo />

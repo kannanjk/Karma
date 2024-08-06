@@ -17,9 +17,9 @@ export const createPost = async (data: any) => {
     }
 }
 
-export const getAllPost = async (postId: any) => {
+export const getAllPost = async () => {
     try {
-        const res = await API.get('/post/api/getAllPost', postId)
+        const res = await API.get('/post/api/getAllPost')
         if (res.data.success) {
             return res.data.data
         } else {

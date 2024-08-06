@@ -52,9 +52,9 @@ const SideBarItem: React.FC<SideBarItemProp> = ({
             relative hidden lg:flex items-center gap-4 p-4 rounded-full
             hover:bg-black hover:text-white hover:opacity-85 cursor-pointer
             ">
-        <Icon size={28} color="white" />
+        <Icon size={26} color="white" />
         <p className="
-                hidden lg:block text-white text-xl
+                hidden lg:block text-white text-lg
                 ">
           {label}
         </p>
