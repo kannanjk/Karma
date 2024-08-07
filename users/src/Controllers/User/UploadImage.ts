@@ -12,7 +12,7 @@ export class UploadImage {
         this.interector = interector
     } 
     async OnUploadImage(req: Request, res: Response, next: NextFunction) {
-        const data = req.body
+        const data = req.file
         try {
             const upload = await this.interector.uploadImage(data)
         } catch (error) {

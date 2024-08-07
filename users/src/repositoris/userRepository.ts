@@ -15,13 +15,19 @@ export class UserRepositry implements IUserRepositry {
         this._prisma = new PrismaClient()
     }
     async create({ name, email, password }: User): Promise<User> {
+        console.log(name + email );
+        
         const check = await this._prisma.user.findUnique({
             where: {
                 email: email,
             },
         })
+        console.log(check);
+        console.log("kannan");
+        
+        
         if (check) {
-            return
+            return 
         } else {
             const user = await this._prisma.user.create({
                 data: {
@@ -107,20 +113,21 @@ export class UserRepositry implements IUserRepositry {
         return user
     }
     async uploadImage(data: any): Promise<any> {
-        const res = await UploadImgToCloudinary(data.profileImage)
-        if (res) {
-           const update = await this._prisma.user.update({
-            where:{
-                email:data.email
-            },
-            data:{
-                profileImage: res.secure_url,
-                coverImage: data.coverImage
-            }
-           })
-            console.log(update);
+        // const a = data
+        // const res = await UploadImgToCloudinary(data.profileImage)
+        // if (res) {
+        //    const update = await this._prisma.user.update({
+        //     where:{
+        //         email:data.email
+        //     },
+        //     data:{
+        //         profileImage: res.secure_url,
+        //         coverImage: data.coverImage
+        //     }
+        //    })
+        //     console.log(update);
             
-        }
+        // }
         return
     }
     async follwUser(following: number, follower: number): Promise<any> {

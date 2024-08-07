@@ -1,9 +1,11 @@
-FROM node:20
+FROM node:alpine
 
 WORKDIR /app/users
-RUN npm install -g nodemon ts-node typescript
-COPY package.json .
+COPY  package.json package-lock.json ./
 RUN npm install
+COPY /prisma ./prisma
+RUN npx prisma generate --schema=./prisma/schema.prisma
+RUN npm install -g nodemon ts-node typescript
 COPY . .
 EXPOSE 3001
 

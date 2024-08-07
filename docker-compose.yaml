@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
     
@@ -14,21 +14,30 @@ services:
   #     - .:/app
   #     - /app/client/node_modules
 
-#  users:
-#     build:
-#       context: ./users
-#       dockerfile: Dockerfile
-#     container_name: users
-#     ports:
-#       - "3001:3001"
-#     restart: always
-#     volumes:
-#       - ./users:/app
-#       - /app/users/node_modules
-#     depends_on:
-#       - mysql
+  users:
+    build:
+      dockerfile: Dockerfile
+      context: ./users
+    container_name: users
+    ports:
+      - "3001:3001" 
+    restart: always
+    environment:
+      DATABASE_URL: "mysql://root:W7301@jqir@mysql:3306/CleanUsers"
 
- mysql:
+
+    volumes: 
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - mysql
+    command: >
+      sh -c "
+      npx prisma generate &&
+      npm start
+      "
+
+  mysql:
     image: mysql:8.0
     container_name: mysql
     ports:
@@ -42,6 +51,11 @@ services:
       MYSQL_PASSWORD: W7301@jqir
     volumes:
       - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
 volumes:
   mysql-data:
