@@ -14,14 +14,34 @@ services:
   #     - .:/app
   #     - /app/client/node_modules
 
-  users:
-    build:
-      dockerfile: Dockerfile
-      context: ./users
-    container_name: users
+#  users:
+#     build:
+#       context: ./users
+#       dockerfile: Dockerfile
+#     container_name: users
+#     ports:
+#       - "3001:3001"
+#     restart: always
+#     volumes:
+#       - ./users:/app
+#       - /app/users/node_modules
+#     depends_on:
+#       - mysql
+
+ mysql:
+    image: mysql:8.0
+    container_name: mysql
     ports:
-      - "3001:3001"
-    restart: always
+      - "3366:3306"
+    expose:
+      - 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: W7301@jqir
+      MYSQL_DATABASE: CleanUsers
+      MYSQL_USER: user
+      MYSQL_PASSWORD: W7301@jqir
     volumes:
-      - .:/app
-      - /app/users/node_modules
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
