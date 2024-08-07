@@ -4,7 +4,7 @@ import React from 'react'
 
 function chat() {
     return (
-        <div className='grid grid-cols-12'>
+        <div className='sm:grid h-full bg-black grid-cols-12'>
             <ChatHead />
             <ChatUser/>
         </div>

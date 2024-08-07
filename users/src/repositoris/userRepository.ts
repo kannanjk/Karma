@@ -114,20 +114,20 @@ export class UserRepositry implements IUserRepositry {
     }
     async uploadImage(data: any): Promise<any> {
         // const a = data
-        // const res = await UploadImgToCloudinary(data.profileImage)
-        // if (res) {
-        //    const update = await this._prisma.user.update({
-        //     where:{
-        //         email:data.email
-        //     },
-        //     data:{
-        //         profileImage: res.secure_url,
-        //         coverImage: data.coverImage
-        //     }
-        //    })
-        //     console.log(update);
+        const res = await UploadImgToCloudinary(data.profileImage)
+        if (res) {
+           const update = await this._prisma.user.update({
+            where:{
+                email:data.email
+            },
+            data:{
+                profileImage: res.secure_url,
+                coverImage: data.coverImage
+            }
+           })
+            console.log(update);
             
-        // }
+        }
         return
     }
     async follwUser(following: number, follower: number): Promise<any> {

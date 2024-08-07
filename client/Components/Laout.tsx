@@ -31,7 +31,7 @@ const Laout: React.FC<LayoutProps> = ({ children }) => {
             <div className=" h-full ">
                 <div className="grid grid-cols-12 h-full">
                     <SideBar user={user} />
-                    <div className="col-span-10 md:col-span-10 lg:col-span-6 border-x-[1px] border-neutral-800">
+                    <div className="col-span-10 md:col-span-10 lg:col-span-7 border-x-[1px] border-neutral-800">
                         {children}
                     </div>
                     <FolwBar  />

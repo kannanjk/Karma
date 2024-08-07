@@ -9,3 +9,6 @@
 body{
   @apply h-full bg-black
 }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
