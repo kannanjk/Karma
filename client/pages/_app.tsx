@@ -15,7 +15,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <LoginModal />
       {/* <Laout>
         <Component {...pageProps} />
-      </Laout> */}
+      </Laout> */} 
+      <h1 className="text-red-500">kannan</h1>
     </Provider>
   )
 }
+ 
