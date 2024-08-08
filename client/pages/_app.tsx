@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
       {/* <Laout>
         <Component {...pageProps} />
       </Laout> */} 
-      <h1 className="text-red-500">kannan</h1>
+      <h1 className="" style={{color:'green'}}>kannan</h1>
     </Provider>
   )
 }
