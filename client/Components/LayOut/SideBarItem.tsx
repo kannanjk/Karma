@@ -40,7 +40,7 @@ const SideBarItem: React.FC<SideBarItemProp> = ({
     <div
       onClick={handleClick}
       className="flex flex-row items-center">
-      <LoadingModal loading={loading} />
+      {/* <LoadingModal loading={loading} /> */}
       <div className="relative rounded-full h-14 w-14 flex 
             items-center justify-center p-4 hover:bg-slate-300
             hover:bg-opacity-10 cursor-pointer lg:hidden

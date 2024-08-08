@@ -77,7 +77,7 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
     }
     return (
         <>
-            <LoadingModal loading={loading} />
+            {/* <LoadingModal loading={loading} /> */}
             <div className='border-b-[1px] border-neutral-800 pb-4'>
 
                 <div className='flex justify-end p-2'>
@@ -128,8 +128,6 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
                         </p>
                     </div>
                     <div className='flex flex-row items-center mt-4 gap-6'>
-
-
                         <div className='flex flex-row items-center gap-1'>
                             <p className='text-white'>
                                 {user1?.following ? Object.keys(user1?.following).length : ''}

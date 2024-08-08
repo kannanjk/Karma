@@ -13,16 +13,15 @@ interface Data {
 }
 
 interface EditPrif {
-    editModal: boolean
+    editModal?: boolean
     setEdimodal: React.Dispatch<React.SetStateAction<boolean>>
-    data: Data
+    data?: Data
 }
 
 const EditModel: React.FC<EditPrif> = ({ editModal, setEdimodal, data }) => {
 
     const [formData, setFormData] = useState({ ...data });
     const [profileImage, setProfileImage] = useState<any>();
-    console.log(profileImage);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });

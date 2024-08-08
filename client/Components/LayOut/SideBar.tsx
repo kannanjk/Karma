@@ -69,7 +69,8 @@ const SideBar: React.FC<User> = ({ user }) => {
         toast.success("Logout success")
     }
     return ( 
-        <div className="lg:col-span-2 md:col-span-2 col-span-2 h-full pr-4 md:pr-6">
+        <div className="lg:col-span-3
+        xl:col-span-2 md:col-span-2 col-span-2 h-full pr-4 md:pr-6">
             <div className="flex flex-col items-center">
                 <div className="space-y-2 lg:w-[230px] ">
                     <SideBarLogo />
