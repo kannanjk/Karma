@@ -5,9 +5,9 @@ import PostFeed from "@/Components/post/PostFeed";
 export default function Home() {
   return (
     <div>
-      {/* <Header label="Home" />
+      <Header label="Home" />
       <Forms placeholder="What's happening" postId={""} />
-      <PostFeed /> */}
+      <PostFeed />
     </div>
   );
 }

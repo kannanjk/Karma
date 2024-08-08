@@ -13,11 +13,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <Toaster />
       <RegisterModal />
       <LoginModal />
-      {/* <Laout>
+      <Laout>
         <Component {...pageProps} />
-      </Laout> */} 
-      <h1 className="" style={{color:'green'}}>kannan</h1>
+      </Laout>
     </Provider>
   )
 }
- 
