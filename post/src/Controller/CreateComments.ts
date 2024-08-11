@@ -10,7 +10,7 @@ export class CreateComment {
         @inject(POST_INTERFACE.PostIntractor) intractor: IPostItractor
     ) {
         this.intractor = intractor
-    }
+    } 
     async OnCommetnt(req: Request, res: Response, next: NextFunction) {
         const body = req.body
         

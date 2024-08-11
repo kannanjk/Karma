@@ -1,3 +1,4 @@
+
 export const POST_INTERFACE = {
     PostRepositry: Symbol.for("PostRepositry"),
     PostIntractor: Symbol.for("PostIntractor"),

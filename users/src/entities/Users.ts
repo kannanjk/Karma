@@ -12,4 +12,4 @@ export class User {
         public readonly notifications?: { userId: number }[],
         public readonly created_at?: Date,
     ) { }
-}
+} 

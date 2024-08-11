@@ -13,10 +13,11 @@ interface SideBarItemProp {
   onClick?: () => void
   auth?: boolean
   alert?: boolean
+  style?:any
 }
 
 const SideBarItem: React.FC<SideBarItemProp> = ({
-  label, href, icon: Icon, onClick, auth, alert
+  label, href, icon: Icon, onClick, auth, alert,style
 }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const { user } = useAppSelector((state) =>
@@ -39,8 +40,8 @@ const SideBarItem: React.FC<SideBarItemProp> = ({
   return (
     <div
       onClick={handleClick}
-      className="flex flex-row items-center">
-      {/* <LoadingModal loading={loading} /> */}
+      className={`flex flex-row items-center ${style}`}>
+      <LoadingModal loading={loading} />
       <div className="relative rounded-full h-14 w-14 flex 
             items-center justify-center p-4 hover:bg-slate-300
             hover:bg-opacity-10 cursor-pointer lg:hidden

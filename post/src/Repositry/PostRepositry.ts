@@ -8,14 +8,13 @@ import axios from "axios";
 const API = axios.create({ baseURL: "http://127.0.0.1:3005" })
 
 @injectable()
-export class PostRepositry implements IPostRepositry {
+export class  PostRepositry implements IPostRepositry {
 
     async CreatePost(input: Post): Promise<Post> {
         const pro = new PostModel(input)
         const data = await pro.save()
         return data
     }
-
     async GetAllPosts(): Promise<Post[]> {
         const data = await PostModel.find()
         if (data) {

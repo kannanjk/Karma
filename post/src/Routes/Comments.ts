@@ -7,7 +7,7 @@ import { CreateComment } from '../Controller/CreateComments'
 import { IPostItractor } from '../interface/IPostIntractor'
 import { PostIntractor } from '../Intractor/PostIntractor'
 import { GetComment } from '../Controller/GetComments'
-
+  
 const container = new Container() 
 
 container

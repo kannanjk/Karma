@@ -36,6 +36,10 @@ function ChatUser() {
             <p> I m good, thanks! How about you?</p>
           </div>
         </div>
+
+
+
+        
         
       </div>
       <div className='bg-gray-400  sticky top-[90%]'>
