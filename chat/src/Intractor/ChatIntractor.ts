@@ -22,4 +22,10 @@ export class ChatIntractor implements IChatIntractor {
         
         return this.repositry.GetUserChat(input)
     }
+    createMessage(input: any) {
+        return this.repositry.createMessage(input)
+    }
+    getMessage(input: any) {
+        return this.repositry.getMessage(input)
+    }
 }

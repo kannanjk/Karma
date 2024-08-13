@@ -7,6 +7,9 @@ import EditModel from '../Modals/EditModel'
 import useLoginModal from '@/hooks/UseLoginModal'
 import toast from 'react-hot-toast'
 import LoadingModal from '../Modals/LoadingModel'
+import { BsChatDotsFill } from 'react-icons/bs'
+import { getChat, sentChatReq } from '@/Api/ChatApi'
+import { useRouter } from 'next/router'
 
 interface UserProp {
     userId: any
@@ -21,8 +24,10 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
 
     const [user1, setUser1] = useState<any>()
     const [following, setFollowing] = useState<boolean>(false)
-
+    const [chat, setChat] = useState<any>({})
+    
     const loginModal = useLoginModal()
+    const router = useRouter()
 
     const createsAt = useMemo(() => {
         if (!user?.created_at) {
@@ -56,7 +61,7 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
     useEffect(() => {
         getUser(userId).then((data: any) => {
             if (data) {
-                setUser1(data.data.data)
+                setUser1(data?.data)
                 setFollowing(false)
                 user1?.followers.findIndex((rt: any) => {
                     if (rt.followingId === user?.id) {
@@ -70,16 +75,44 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
                 return
             }
         })
+        const fet = {
+            senderId: user?.id,
+            receverId: userId
+        }
+        getChat(fet).then((dat: any) => {
+            setChat(dat)
+        })
 
     }, [user1, user, userId])
     function fun() {
         setEdimodal(true)
     }
+    const sendMsgReq = async () => {
+        const fet = {
+            senderId: userId,
+            receverId: user?.id
+        }
+        if (chat?.success) {
+            const url = `/chat/${userId}`
+            router.push(url)
+        } else {
+            if (confirm("sent message request")) {
+                sentChatReq(fet).then((dat: any) => {
+                    if (dat) {
+                        const url = `/chat/${userId}`
+                        router.push(url)
+                    }
+                })
+                toast.success('message request Senting.....')
+            } else {
+                toast.success("It's oky")
+            }
+        }
+    }
     return (
         <>
-            {/* <LoadingModal loading={loading} /> */}
+            <LoadingModal loading={loading} />
             <div className='border-b-[1px] border-neutral-800 pb-4'>
-
                 <div className='flex justify-end p-2'>
                     {
                         userId == user?.id ? (
@@ -93,17 +126,22 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
                             </>
                         ) :
                             (
-                                following ?
-                                    <button
-                                        onClick={unfollw}
-                                        className={`disabled:opacity-70 disabled:cursor-not-allowed rounded-full font-semibold hover:opacity-80 transition border-2 bg-white text-black border-black text:md px-4 py-2`}>
-                                        UnFollw
-                                    </button> :
-                                    <button
-                                        onClick={CheckUser}
-                                        className={`disabled:opacity-70 disabled:cursor-not-allowed rounded-full font-semibold hover:opacity-80 transition border-2 bg-white text-black border-black text:md px-4 py-2`}>
-                                        Follw
-                                    </button>
+                                <div className='flex items-center gap-8'>
+                                    <BsChatDotsFill onClick={sendMsgReq} color='white' className='cursor-pointer' size={25} />
+                                    {
+                                        following ?
+                                            <button
+                                                onClick={unfollw}
+                                                className={`disabled:opacity-70 disabled:cursor-not-allowed rounded-full font-semibold hover:opacity-80 transition border-2 bg-white text-black border-black text:md px-4 py-2`}>
+                                                UnFollw
+                                            </button> :
+                                            <button
+                                                onClick={CheckUser}
+                                                className={`disabled:opacity-70 disabled:cursor-not-allowed rounded-full font-semibold hover:opacity-80 transition border-2 bg-white text-black border-black text:md px-4 py-2`}>
+                                                Follw
+                                            </button>
+                                    }
+                                </div>
                             )
                     }
                 </div>

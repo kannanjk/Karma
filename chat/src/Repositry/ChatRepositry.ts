@@ -2,6 +2,8 @@ import { Chat } from "app/entity/Chat";
 import { ChatModel } from "../app/Database/MessageSchema.ts/ChatModel";
 import { IChatRepositry } from "InterFace/IChatRepositry";
 import { injectable } from "inversify";
+import { messageModel } from "../app/Database/MessageSchema.ts/messageModel";
+import { Message } from "app/entity/Message";
 
 
 @injectable()
@@ -21,7 +23,6 @@ export class ChatRepositry implements IChatRepositry {
             }
         })
         if (chat) {
-            console.log(chat);
             return chat
         }
     }
@@ -29,6 +30,24 @@ export class ChatRepositry implements IChatRepositry {
         const user = await ChatModel.findOne({
             member: { $all: [input.senderId, input.receverId] }
         })
+        console.log(user);
+        
         return user
+    } 
+    async createMessage(input: any) {
+        const newMsg = new messageModel(input)
+        const msg = await newMsg.save()
+        return msg
+    }
+    async getMessage(input: any): Promise<Message[]> {
+        const msgs = await messageModel.find({
+            chatId: input.chatId
+        })
+        if (msgs) {
+            return msgs
+        }
     }
 }
+
+
+

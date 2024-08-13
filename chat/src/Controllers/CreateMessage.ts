@@ -1,33 +1,38 @@
+import { NextFunction, Request, Response } from "express"
 import { IChatIntractor } from "../InterFace/IChatIntractor"
 import { inject, injectable } from "inversify"
 import { CHAT_INTERFACE } from "../utils"
-import { NextFunction, Request, Response } from "express"
 
-@injectable()
-export class GetChat {
+@injectable() 
+export class CreateMessage{ 
     private intractor: IChatIntractor
     constructor(
         @inject(CHAT_INTERFACE.ChatIntractor) intractor: IChatIntractor
     ) {
         this.intractor = intractor
     }
-    async OnGetChat(req: Request, res: Response, next: NextFunction) {
+    async OnCreateMessage (req: Request, res: Response, next: NextFunction) {
         const body = req.body
         try {
-            if (body) {                
-                const data = await this.intractor.GetChat(body)
+            if (body) {
+                const data = await this.intractor.createMessage(body)
                 if (data) {
-                    res.send({ 
-                        message: 'Chat found',
+                    res.send({
+                        message: 'Chat created',
                         success: true,
                         data: data
                     })
-                } else {
+                }else{
                     res.send({
-                        message: 'Chat not not found',
+                        message: 'somthing went wrong',
                         success: false,
                     })
                 }
+            }else{
+                res.send({
+                    message: 'userId,senterId require',
+                    success: false,
+                })
             }
         } catch (error) {
             res.send({

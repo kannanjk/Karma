@@ -12,7 +12,7 @@ import { useEffect } from "react";
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     import('tw-elements');
-}, []);
+  }, []);
   return (
     <Provider store={store}>
       <Toaster />

@@ -51,7 +51,7 @@ const SideBar: React.FC<User> = ({ user }) => {
         },
         {
             lable: "Find",
-            href: `/user/:id`,
+            href: `/find/2`,
             icon: BiSearchAlt,
             style: "block xl:hidden"
         },

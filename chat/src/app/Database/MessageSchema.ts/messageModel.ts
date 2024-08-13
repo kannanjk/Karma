@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 interface messageAttrs {
-    senderId: number
+    chatId: string
     receverId: number
     message: string
 }
@@ -11,15 +11,15 @@ interface messageModel extends mongoose.Model<messageDoc> {
 }
 
 interface messageDoc extends mongoose.Document {
-    senderId: number
+    chatId:string
     receverId: number
     message: string
 }
 
 const messageSchema = new mongoose.Schema({
-    senderId: {
-        type: Number,
-        require: true
+    chatId:{
+        type:String,
+        require:true
     },
     receverId: {
         type: Number,

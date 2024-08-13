@@ -5,25 +5,23 @@ import UserBio from "@/Components/users/UserBio"
 import UserHero from "@/Components/users/UserHero"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
 
 const UserView = () => {
     const [user, setUser] = useState<any>({})
     
     const router = useRouter()
-    const dispatch = useDispatch()
 
     const { userId } = router.query
 
     useEffect(() => {
         getUser(Number(userId)).then((data: any) => {
             if (data) {
-                setUser(data.data.data)
+                setUser(data?.data?.data)
             } else {
                 return
             }
         })
-    }, [dispatch, userId])
+    }, [userId])
 
     return (
         <>

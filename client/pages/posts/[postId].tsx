@@ -9,11 +9,11 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
-function PostId() {
+function PostId() { 
     const [post, setPost] = useState<any>()
     const [comment, setComment] = useState<any>()
     const [loading, setLoading] = useState<boolean>(false)
-
+ 
     const router = useRouter()
     const { postId } = router.query
 

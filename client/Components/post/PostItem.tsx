@@ -41,7 +41,7 @@ const PostItem: React.FC<PostItemProp> = ({
         getUser(Number(userId)).then((dat: any) => {
             if (dat) {
                 setLoading(true)
-                setUser1(dat.data.data)
+                setUser1(dat?.data)
                 data?.likes.findIndex((rt: any) => {
                     if (rt == user?.id) {
                         setLoading(false)

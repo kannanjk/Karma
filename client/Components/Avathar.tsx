@@ -5,30 +5,29 @@ import { useRouter } from "next/router"
 import { useCallback, useEffect, useState } from "react"
 
 interface AvatharProp {
-    userId: string
+    userId?: string
     isLarge?: boolean
     hasBorder?: boolean
+    ischat?: boolean
     currentUser?: string
 }
 
 const Avathar: React.FC<AvatharProp> = ({
-    userId, hasBorder, isLarge, currentUser
+    userId, hasBorder, isLarge, currentUser, ischat
 }) => {
     const [user, setUser] = useState<any>({})
-    console.log(user);
 
     const router = useRouter()
     const onClick = useCallback((event: any) => {
         event.stopPropagation();
-        const url = `/users/${userId}`
+        const url = ischat ? `/chat/${userId}` : `/users/${userId}`
         router.push(url)
-    }, [router, userId])
-
+    }, [ischat, router, userId])
 
     useEffect(() => {
         getUser(Number(userId)).then((data: any) => {
-            if (data?.data.data) {
-                setUser(data?.data.data)
+            if (data?.success) {
+                setUser(data?.data)
             } else {
                 return
             }
