@@ -18,8 +18,6 @@ export class ChatIntractor implements IChatIntractor {
        return this.repositry.getChat(input)
     }
     getUserChat(input: any) {
-        console.log("sdfghjgfds");
-        
         return this.repositry.GetUserChat(input)
     }
     createMessage(input: any) {

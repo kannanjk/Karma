@@ -3,41 +3,48 @@ import { getUserChat } from '@/Api/ChatApi'
 import { useAppSelector } from '@/Redux/Store'
 import ChatHead1 from './ChatHead1'
 import LoadingModal from '../Modals/LoadingModel'
+import { getSocket } from './Socket/socket'
+ 
 
-interface UserProp {
+interface UserProp { 
   users?: Record<string, any>[]
 }
 
 const ChatHead: React.FC<UserProp> = ({ users }) => {
-  // const [users, setUsers] = useState<any>([])
-  // const [loading, setLoading] = useState<boolean>(false)
+  const [onlineUsers, sestOnlineUser] = useState([])
 
-  // const { user } = useAppSelector((state) =>
-  //   state.user
-  // )
-
-  // useEffect(() => {
-  //   const userId = {
-  //     userId: user?.id
-  //   }
-  // // setLoading(true)    
-  //   getUserChat(userId).then((data: any) => {
-  //     if (data) {
-  //       setUsers(data)
-  //       // setLoading(false)
-  //     }
-  //   })
-  // }, [user?.id])
+  const { user } = useAppSelector((state) =>
+    state.user
+  )
+  useEffect(() => {
+   const socket= getSocket()
+   socket.emit('user-joined', user?.id)
+   socket.on('get-users', (use) => {
+    sestOnlineUser(use)
+  })
+  })
+  const checkOnlineStatuse = (dat: any) => {
+    const online = onlineUsers.find((user: any) => user.userId === dat)
+    return online ? true : false
+  }
   return (
     <div className='sm:col-span-3 w-full sticky top-[0%] sm:h-screen text-white'>
       {/* <LoadingModal loading={loading} /> */}
-      <div className='overflow-y-scroll   no-scrollbar sm:overflow-x-scroll sm:h-screen flex flex-row sm:block w-full '>
+      <div key='ui' className='overflow-y-scroll no-scrollbar sm:overflow-x-scroll sm:h-screen flex flex-row sm:block w-full '>
         {
           users?.map((data: any, ind: number) => (
-            <ChatHead1
-              key={ind}
-              userId={data?.member[0]}
-            />
+            <div key={ind}>
+              {
+                data?.member.map((dat: any, ind: number) => (
+                  dat == user?.id ? '' :
+                    <ChatHead1
+                      key={ind}
+                      userId={dat}
+                      online={checkOnlineStatuse(dat)}
+                    />
+                ))
+              }
+            </div>
           ))
         }
       </div>

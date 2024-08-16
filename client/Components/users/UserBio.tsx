@@ -1,5 +1,5 @@
 import { follwUser, getUser, unFollwUser } from '@/Api/userApi'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useAppSelector } from '@/Redux/Store'
 import { BiCalendar } from 'react-icons/bi'
 import { format } from 'date-fns'
@@ -10,6 +10,7 @@ import LoadingModal from '../Modals/LoadingModel'
 import { BsChatDotsFill } from 'react-icons/bs'
 import { getChat, sentChatReq } from '@/Api/ChatApi'
 import { useRouter } from 'next/router'
+import { Socket ,io} from 'socket.io-client'
 
 interface UserProp {
     userId: any
@@ -92,13 +93,22 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
             senderId: userId,
             receverId: user?.id
         }
-        if (chat?.success) {
+        if (chat?.success) { 
             const url = `/chat/${userId}`
             router.push(url)
         } else {
             if (confirm("sent message request")) {
+
+                    // socket.current = io('http://localhost:3006', {
+                    //     path: '/api',
+                    //     transports: ['websocket']
+                    // })
+                    // socket.current.on('user-joined', (userId) => {
+                    //     console.log("user Connected:", userId);
+                    // })
+                    // socket.current.emit('create-chat', fet)
                 sentChatReq(fet).then((dat: any) => {
-                    if (dat) {
+                    if (dat) { 
                         const url = `/chat/${userId}`
                         router.push(url)
                     }

@@ -1,16 +1,11 @@
 import { ChatIntractor } from "../Intractor/ChatIntractor";
-import { CreateChat } from "../Controllers/CreateChat";
 import { IChatIntractor } from "../InterFace/IChatIntractor";
 import { IChatRepositry } from "../InterFace/IChatRepositry";
 import { Container } from "inversify";
 import { ChatRepositry } from "../Repositry/ChatRepositry";
 import { CHAT_INTERFACE } from "../utils";
 import express from 'express'
-import { GetChat } from "../Controllers/GetChat";
-import { GetUserChat } from "../Controllers/GetUserChat";
-import { CreateMessage } from "../Controllers/CreateMessage";
-import { GetMessage } from "../Controllers/GetMessage";
-
+import { CreateChat, CreateMessage, GetChat, GetMessage, GetUserChat } from "../Controllers";
 
 const container = new Container()
 
@@ -20,22 +15,19 @@ container
 container
     .bind<IChatIntractor>(CHAT_INTERFACE.ChatIntractor)
     .to(ChatIntractor)
-container
-    .bind(CHAT_INTERFACE.CreateChat)
-    .to(CreateChat)
-container
-    .bind(CHAT_INTERFACE.GetChat)
-    .to(GetChat)
-container
-    .bind(CHAT_INTERFACE.GetUserChat)
-    .to(GetUserChat)
-container
-    .bind(CHAT_INTERFACE.CreateMessage)
-    .to(CreateMessage)
-container
-    .bind(CHAT_INTERFACE.GetMessage)
-    .to(GetMessage)
 
+const controllers = [
+    { route: '/createChat', bindingKey: CHAT_INTERFACE.CreateChat, controller: CreateChat },
+    { route: '/getChat', bindingKey: CHAT_INTERFACE.GetChat, controller: GetChat },
+    { route: '/getUserChat', bindingKey: CHAT_INTERFACE.GetUserChat, controller: GetUserChat },
+    { route: '/createMsg', bindingKey: CHAT_INTERFACE.CreateMessage, controller: CreateMessage },
+    { route: '/getMsg', bindingKey: CHAT_INTERFACE.GetMessage, controller: GetMessage },
+];
+
+controllers.forEach(({ bindingKey, controller }) =>
+    container.bind(bindingKey).to(controller)
+);
+ 
 const createChat = container.get<CreateChat>(CHAT_INTERFACE.CreateChat)
 const getChat = container.get<GetChat>(CHAT_INTERFACE.GetChat)
 const getUserChat = container.get<GetUserChat>(CHAT_INTERFACE.GetUserChat)

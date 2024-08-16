@@ -30,8 +30,6 @@ export class ChatRepositry implements IChatRepositry {
         const user = await ChatModel.findOne({
             member: { $all: [input.senderId, input.receverId] }
         })
-        console.log(user);
-        
         return user
     } 
     async createMessage(input: any) {
