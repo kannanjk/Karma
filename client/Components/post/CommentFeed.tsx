@@ -1,6 +1,6 @@
 import React from "react"
 import CommentItem from "./CommentItem"
-
+ 
 interface CommentProp {
     coments?: Record<string, any>[]
 }

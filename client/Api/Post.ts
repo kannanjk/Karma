@@ -11,7 +11,7 @@ export const createPost = async (data: any) => {
             return res.data
         } else {
             return
-        }
+        } 
     } catch (error) {
         console.log(error);
     }

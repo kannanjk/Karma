@@ -4,24 +4,23 @@ import { useAppSelector } from '@/Redux/Store'
 import ChatHead1 from './ChatHead1'
 import LoadingModal from '../Modals/LoadingModel'
 import { getSocket } from './Socket/socket'
- 
 
-interface UserProp { 
-  users?: Record<string, any>[]
-}
 
-const ChatHead: React.FC<UserProp> = ({ users }) => {
+const ChatHead = () => {
   const [onlineUsers, sestOnlineUser] = useState([])
 
   const { user } = useAppSelector((state) =>
     state.user
   )
+  const { chat } = useAppSelector((state) =>
+    state.chat
+  )
   useEffect(() => {
-   const socket= getSocket()
-   socket.emit('user-joined', user?.id)
-   socket.on('get-users', (use) => {
-    sestOnlineUser(use)
-  })
+    const socket = getSocket()
+    socket.emit('user-joined', user?.id)
+    socket.on('get-users', (use) => {
+      sestOnlineUser(use)
+    })
   })
   const checkOnlineStatuse = (dat: any) => {
     const online = onlineUsers.find((user: any) => user.userId === dat)
@@ -32,9 +31,9 @@ const ChatHead: React.FC<UserProp> = ({ users }) => {
       {/* <LoadingModal loading={loading} /> */}
       <div key='ui' className='overflow-y-scroll no-scrollbar sm:overflow-x-scroll sm:h-screen flex flex-row sm:block w-full '>
         {
-          users?.map((data: any, ind: number) => (
+          chat?.map((data: any, ind: number) => (
             <div key={ind}>
-              {
+              { 
                 data?.member.map((dat: any, ind: number) => (
                   dat == user?.id ? '' :
                     <ChatHead1

@@ -12,7 +12,7 @@ import toast from 'react-hot-toast'
 
 interface PostItemProp {
     data?: Record<string, any>
-    userId?: string
+    userId?: string 
 }
 
 const PostItem: React.FC<PostItemProp> = ({

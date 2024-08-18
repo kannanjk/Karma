@@ -5,6 +5,7 @@ import { TypingController } from "../Controllers/socket/TypingContoller";
 let activeUsers: any[] = []
 
 export const socket = (socket: Socket) => {
+
     const typingController = new TypingController(socket);
 
     socket.on("user-joined", (userId) => {
@@ -15,10 +16,11 @@ export const socket = (socket: Socket) => {
         }
         io.emit('get-users', activeUsers)
     })
+    socket.on("message", typingController.createMsg)
     socket.on("disconnect", () => {
         activeUsers = activeUsers.filter((user) => user.socketId !== socket.id)
         io.emit("get-users", activeUsers)
     })
     socket.on('typing-started-client', typingController.typinStarted)
-    socket.on('typing-stopped-client',typingController.typingStoped)
+    socket.on('typing-stopped-client', typingController.typingStoped)
 }

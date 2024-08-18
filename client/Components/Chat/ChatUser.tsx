@@ -8,24 +8,63 @@ import { FaSmile } from 'react-icons/fa'
 import { useRouter } from 'next/router'
 import { getUser } from '@/Api/userApi'
 import LoadingModal from '../Modals/LoadingModel'
-import { getChat } from '@/Api/ChatApi'
+import { getChat, sentMessage } from '@/Api/ChatApi'
 import { useAppSelector } from '@/Redux/Store'
 import { getSocket } from './Socket/socket'
+import ChatBox from './ChatBox'
+import toast from 'react-hot-toast'
 
 function ChatUser() {
   const [user1, setUser1] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
   const router = useRouter()
-  const { chat } = router.query
   const [chat1, setChat1] = useState<any>({})
   const [typing, setTyping] = useState<any>({})
   const [typingTimeOut, setTypingTimeout] = useState<any>();
+  const [newMessage, setNewMessages] = useState('')
+  const [onlineUsers, setuser] = useState([])
+  const [roomId, setRoomId] = useState<any>({})
+
+  const { chat } = router.query
+
+  const handleClick = (e: any) => {
+    e.preventDefault()
+    
+    const message = {
+      receverId: chat,
+      message: newMessage,
+      chatId: chat1?._id,
+      roomId: roomId
+    }
+    if (message.receverId && message.chatId && message.message ) {
+      socket.emit("message", message)
+      setNewMessages('')
+    } else {
+      toast.error("Try Again")
+      setLoading(false)
+    }
+  }
 
   const { user } = useAppSelector((state) =>
     state.user
   )
 
   const socket = getSocket()
+  useEffect(() => {
+
+    socket.emit('user-joined', user?.id)
+    socket.on('get-users', (use) => {
+      setuser(use)
+    })
+    onlineUsers.map((user: any) => {
+      if (user.userId == chat) {
+        setRoomId(user.socketId)
+      }
+    })
+  })
+
+
+
 
   useEffect(() => {
     setLoading(true)
@@ -52,7 +91,7 @@ function ChatUser() {
     })
     const a = 'typing-stoped-server' + user?.id
     socket.on(a, (typ) => {
-        setTyping(null)
+      setTyping(null)
     });
   }, [chat, socket, user?.id])
   const typi = {
@@ -64,14 +103,12 @@ function ChatUser() {
       <LoadingModal loading={loading} />
       <div className='flex sticky sm:top-[0%] top-[12%]  bg-gray-400'>
         <div className='w-[50%]  gap-4 font-bold text-white p-3 flex'>
-
           <Avathar userId={chat as string} />
           <div>
             <h1>{user1?.name} </h1>
             {
               typing?.userId == user?.id ? <p className='text-white'>typing...</p> : null
             }
-
           </div>
         </div>
         <div className='w-[50%] items-center justify-end  gap-5 font-bold text-white p-3 flex'>
@@ -79,33 +116,18 @@ function ChatUser() {
           <BsCameraVideoFill size={23} className='mr-5 cursor-pointer' />
         </div>
       </div>
-      <div className='w-full p-3  no-scrollbar  sm:h-[80%] h-[63%] overflow-x-auto text-white'>
-
-        {/* Client chat */}
-        <div className="mb-4">
-          <div className="flex items-end">
-            <div className="max-w-xs mx-2 bg-gray-200 text-gray-700 rounded-lg px-4 py-2">
-              <p>Hello! How are you?</p>
-            </div>
-          </div>
-        </div>
-        {/* User Chat */}
-        <div className="mb-4 flex justify-end">
-          <div className="max-w-xs mx-2 bg-blue-600 text-white rounded-lg px-4 py-2">
-            <p> I m good, thanks! How about you?</p>
-          </div>
-        </div>
-      </div>
+      <ChatBox user={user} chatId={chat1?._id} />
       <div className='bg-gray-400  sticky top-[90%]'>
         <div className='w-full bg-gray-500 p-3 gap-4 items-center flex'>
           <input
-            onChange={() => {
+            value={newMessage}
+            onChange={(e) => {
+              setNewMessages(e.target.value)
               socket.emit('typing-started-client', typi)
-
               setTypingTimeout(
                 setTimeout(() => {
                   socket.emit("typing-stopped-client", typi);
-                }, 10000)
+                }, 1000)
               );
             }}
             type="text"
@@ -115,8 +137,14 @@ function ChatUser() {
           <FaSmile color='white' size={23} />
           <RiGalleryLine color='white' size={23} />
           <div className=' w-[20%] flex justify-end'>
-            <Button
-              outline label={'Sent'} />
+            <button
+              onClick={(e: any) => {
+                handleClick(e)
+              }}
+              className=' disabled:opacity-70 disabled:cursor-not-allowed rounded-full
+            font-semibold hover:opacity-80 transition border-2 w-fit bg-sky-500 text:md px-4 py-2 text-white '>
+              Sent
+            </button>
           </div>
         </div>
       </div>

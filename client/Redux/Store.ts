@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import { userSlice } from './Features/GetUser'
 import { TypedUseSelectorHook } from 'react-redux'
 import { useSelector } from 'react-redux'
+import { postSlice } from './Features/SetPost'
+import { chatSlice } from './Features/SetChat'
 
 export const store = configureStore({
   reducer: {
-    //   posts: postsReducer,
-    //   comments: commentsReducer,
-    user: userSlice.reducer
+    user: userSlice.reducer,
+    posts: postSlice.reducer,
+    chat: chatSlice.reducer
   },
 })
 

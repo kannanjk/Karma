@@ -39,6 +39,7 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
     }, [user?.created_at])
     const CheckUser = async () => {
         if (user?.id && user1?.id) {
+            setFollowing(true)
             const res = await follwUser(user1?.id, user?.id)
             if (res.success) {
                 toast.success(res.message)
@@ -72,7 +73,6 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
                     }
                 })
             } else {
-                setLoading(false)
                 return
             }
         })
@@ -98,15 +98,6 @@ const UserBio: React.FC<UserProp> = ({ userId }) => {
             router.push(url)
         } else {
             if (confirm("sent message request")) {
-
-                    // socket.current = io('http://localhost:3006', {
-                    //     path: '/api',
-                    //     transports: ['websocket']
-                    // })
-                    // socket.current.on('user-joined', (userId) => {
-                    //     console.log("user Connected:", userId);
-                    // })
-                    // socket.current.emit('create-chat', fet)
                 sentChatReq(fet).then((dat: any) => {
                     if (dat) { 
                         const url = `/chat/${userId}`

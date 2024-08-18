@@ -2,7 +2,7 @@ import React from "react"
 
 interface ButtonProps {
     label: string
-    secondry?: boolean
+    secondry?: boolean 
     fullWidth?: boolean
     large?: boolean
     onClick?: () => void
@@ -13,7 +13,7 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({
     label, secondry, fullWidth, large, onClick, disabled, outline
 }) => {
-    return (
+    return ( 
             <button
                 disabled={disabled}
                 onClick={onClick}

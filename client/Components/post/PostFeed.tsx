@@ -3,43 +3,41 @@ import PostItem from "./PostItem"
 import { getAllPost, getUserPost } from "@/Api/Post"
 import { useRouter } from "next/router"
 import LoadingModal from "../Modals/LoadingModel"
+import { useAppSelector } from "@/Redux/Store"
 
 interface PostProp {
     userI?: number
 }
 
 const PostFeed: React.FC<PostProp> = ({ userI }) => {
-    const [post, setPost] = useState([])
     const [loading, setLoading] = useState<boolean>(false)
     const router = useRouter()
     const { userId } = router.query
-
-    useEffect(() => {
-        const usId = {
-            user: Number(userId)
-        }
-        setLoading(true)
-        userId ?
-            getUserPost(usId).then((res: any) => {
-                setPost(res)
-                setLoading(false)
-            })
-            :
-            getAllPost().then((res: any) => {
-                setPost(res)
-                setLoading(false)
-            })
-    }, [userI, userId])
+    const { post } = useAppSelector((state) =>
+        state.posts
+    )
     return (
         <>
-        <LoadingModal loading={loading} />
+            <LoadingModal loading={loading} />
             {
-                post?.map((item: any, ind:number) => (
-                    <PostItem
-                        data={item}
-                        key={ind}
-                        userId={item.user}
-                    />
+                post?.map((item: any, ind: number) => (
+                    <>
+                        {
+                            userId ?
+                                userId == item?.user ?
+                                    <PostItem
+                                        data={item}
+                                        key={ind}
+                                        userId={item.user}
+                                    />
+                                    : null:
+                                    <PostItem
+                                        data={item}
+                                        key={ind}
+                                        userId={item.user}
+                                    />
+                        }
+                    </>
                 ))
             }
         </>
