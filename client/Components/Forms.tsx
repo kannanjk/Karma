@@ -70,7 +70,7 @@ const Forms: React.FC<FormsProp> = ({
             {
                 user?.id ? (
                     <div className="flex flex-row gap-4">
-                        <LoadingModal loading={loading} />
+                        {/* <LoadingModal loading={loading} /> */}
                         <div>
                             <Avathar userId={user?.id} />
                         </div>

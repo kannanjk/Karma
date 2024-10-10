@@ -3,8 +3,6 @@ import { PrismaClient } from '@prisma/client'
 import { Password } from "../app/HashPassword";
 import { IUserRepositry } from "../interfaces/IUserRepositry";
 import { injectable } from "inversify";
-import { uploadImageToBucket } from "../app/externelService/awsS3Bucket";
-import { fileBuffer } from "../app/externelService/resiseImageSharp";
 import { Notification } from "entities/Notification";
 import { UploadImgToCloudinary } from "../app/externelService/Cloudinary";
 
@@ -15,19 +13,15 @@ export class UserRepositry implements IUserRepositry {
         this._prisma = new PrismaClient()
     }
     async create({ name, email, password }: User): Promise<User> {
-        console.log(name + email );
-        
+        console.log(name + email);
+
         const check = await this._prisma.user.findUnique({
             where: {
                 email: email,
             },
         })
-        console.log(check);
-        console.log("kannan");
-        
-        
         if (check) {
-            return 
+            return
         } else {
             const user = await this._prisma.user.create({
                 data: {
@@ -43,7 +37,7 @@ export class UserRepositry implements IUserRepositry {
         const check = await this._prisma.user.findUnique({
             where: {
                 email: data.email
-            },
+            }
         })
         if (check) {
             const comparePass = await Password.compare(
@@ -113,20 +107,17 @@ export class UserRepositry implements IUserRepositry {
         return user
     }
     async uploadImage(data: any): Promise<any> {
-        // const a = data
         const res = await UploadImgToCloudinary(data.profileImage)
         if (res) {
-           const update = await this._prisma.user.update({
-            where:{
-                email:data.email
-            },
-            data:{
-                profileImage: res.secure_url,
-                coverImage: data.coverImage
-            }
-           })
-            console.log(update);
-            
+            const update = await this._prisma.user.update({
+                where: {
+                    email: data.email
+                },
+                data: {
+                    profileImage: res.secure_url,
+                    coverImage: data.coverImage
+                }
+            })
         }
         return
     }
@@ -180,11 +171,7 @@ export class UserRepositry implements IUserRepositry {
             })
             console.log(a);
         }
-        console.log(deleting);
-
-
         return deleting
-
     }
     async GetNotifications(userId: number): Promise<Notification[]> {
         const noti = await this._prisma.notification.findMany({
@@ -198,8 +185,7 @@ export class UserRepositry implements IUserRepositry {
         return noti
     }
     async updateNotification(id: number): Promise<null> {
-
-        const result = await this._prisma.notification.updateMany({
+         await this._prisma.notification.updateMany({
             where: {
                 userId: id,
                 read: true
@@ -208,6 +194,6 @@ export class UserRepositry implements IUserRepositry {
                 read: false
             }
         });
-        return null
+        return 
     }
 }

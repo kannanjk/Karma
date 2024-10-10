@@ -17,16 +17,18 @@ import toast from 'react-hot-toast'
 function ChatUser() {
   const [user1, setUser1] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
-  const router = useRouter()
   const [chat1, setChat1] = useState<any>({})
   const [typing, setTyping] = useState<any>({})
   const [typingTimeOut, setTypingTimeout] = useState<any>();
   const [newMessage, setNewMessages] = useState('')
   const [onlineUsers, setuser] = useState([])
   const [roomId, setRoomId] = useState<any>({})
+  const [sent, setSent] = useState<any>({})
+  
+  const router = useRouter()
 
   const { chat } = router.query
-
+  
   const handleClick = (e: any) => {
     e.preventDefault()
     
@@ -37,6 +39,7 @@ function ChatUser() {
       roomId: roomId
     }
     if (message.receverId && message.chatId && message.message ) {
+      setSent(message)
       socket.emit("message", message)
       setNewMessages('')
     } else {
@@ -62,9 +65,6 @@ function ChatUser() {
       }
     })
   })
-
-
-
 
   useEffect(() => {
     setLoading(true)

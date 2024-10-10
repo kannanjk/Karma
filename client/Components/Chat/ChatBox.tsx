@@ -29,6 +29,7 @@ const ChatBox: React.FC<ChatBoxProp> = ({ user, chatId }) => {
         socket.on("message-from-server", (data) => {
             setReceiveMessage(data)
         });
+        scroll.current?.scrollIntoView({ behavior: "smooth" });
 
         return () => {
             socket.off("message-from-server");

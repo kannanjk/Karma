@@ -9,7 +9,6 @@ import Modal from '../Modal'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
-
 function RegisterModal() {
     const API = axios.create({ baseURL: "http://localhost:3005" })
     const dispatch = useDispatch()
@@ -28,8 +27,8 @@ function RegisterModal() {
         REgisterModal.onClose()
         loginModal.onOpen();
     }, [isLoading, REgisterModal, loginModal])
- 
-    const onSubmit = useCallback(async () => { 
+
+    const onSubmit = useCallback(async () => {
         try {
             setLoading(true)
             if (name && email && password) {
@@ -38,7 +37,7 @@ function RegisterModal() {
                     REgisterModal.onClose()
                     toast.success(res.data.message)
                     dispatch(setUser(res.data.data))
-                    localStorage.setItem('token',res.data.token)
+                    localStorage.setItem('token', res.data.token)
                     location.reload()
                 } else {
                     toast.error(res.data.message)
